@@ -4,24 +4,14 @@ from io import BytesIO
 from urllib import request
 from zipfile import ZipFile
 
-from src.constants import (
-    Path,
+from src.constants import *
 
-    DATASETS_PATH,
-    DEVICES_PATH,
-    ASSET_PATH,
-    MODEL_PATH,
-
-    SAMPLES_LINK,
-    MODEL_LINK,
-)
-
-def download_model():
+def download_model() -> None:
     # Download the model from the specified link and save it to the asset path
     request.urlretrieve(MODEL_LINK, ASSET_PATH)
 
-def download_samples():
-    gesture_recognizer_path = 'src/libs/gesture_recognizer'
+def download_samples() -> None:
+    gesture_recognizer_path = GESTURE_RECOGNIZER_PATH
 
     # Open the URL containing the samples and read the data
     samples = request.urlopen(SAMPLES_LINK)

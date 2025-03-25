@@ -15,11 +15,10 @@
 import socket
 
 from src.utils import byte
-from src.constants import LOCAL_PORT
-from src.constants import BUFFER_SIZE
+from src.constants import *
 
 class Communicator:
-    def __init__(self, listener):
+    def __init__(self, listener: callable):
         assert(callable(listener))  # Ensure the listener is a callable function
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Create a UDP socket
@@ -32,7 +31,7 @@ class Communicator:
         self._running = False  # Initialize the running state to False
         self._callback = listener  # Store the listener callback function
 
-    def start(self):
+    def start(self) -> None:
         assert(self._running is False)  # Ensure the communicator is not already running
 
         self._running = True  # Set the running state to True
@@ -45,15 +44,15 @@ class Communicator:
 
                 self._callback(data, address)  # Call the listener with the decoded data and address
 
-    def stop(self):
+    def stop(self) -> None:
         assert(self._running is True)  # Ensure the communicator is currently running
 
         self._running = False  # Set the running state to False
 
-    def send(self, address: tuple[str, int], command: str):
+    def send(self, address: tuple[str, int], command: str) -> None:
         command = byte.encode(command)  # Encode the command to bytes
 
         self.socket.sendto(command, address)  # Send the encoded command to the specified address
 
-    def is_running(self):
+    def is_running(self) -> bool:
         return self._running  # Return the current running state

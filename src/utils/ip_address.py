@@ -1,6 +1,6 @@
 import socket
 
-def get():
+def get() -> str:
     # Create a UDP socket
     temporary_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 

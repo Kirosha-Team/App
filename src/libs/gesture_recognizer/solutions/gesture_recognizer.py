@@ -17,14 +17,10 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python.vision import RunningMode
 
-from src.constants import (
-    Path,
-    ASSET_PATH,
-    DEFAULT_GESTURE
-)
+from src.constants import *
 
 class GestureRecognizer:
-    def __result_callback(self, *args):
+    def __result_callback(self, *args) -> None:
         if self.listener:  # Check if a listener is set
             gesture = DEFAULT_GESTURE  # Default gesture if none detected
 
@@ -35,7 +31,7 @@ class GestureRecognizer:
 
             self.listener(gesture)  # Notify the listener with the detected gesture
 
-    def __init__(self, listener):
+    def __init__(self, listener: callable):
         if not Path.exists(ASSET_PATH):  # Ensure the asset path exists
             print(f'[ERROR]: gesture_recognizer.task nil or missing!')
             return
@@ -61,7 +57,7 @@ class GestureRecognizer:
 
         self.listener = listener  # Assign the listener to the instance variable
 
-    def process(self, image: numpy.ndarray):
+    def process(self, image: numpy.ndarray) -> None:
         mp_image = mediapipe.Image(
             image_format=mediapipe.ImageFormat.SRGB,  # Set the image format to SRGB
             data=image  # Assign the image data

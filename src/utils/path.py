@@ -2,7 +2,7 @@ import os
 
 class Path:
     @staticmethod
-    def exists(file: str):
+    def exists(file: str) -> bool:
         try:
             # Check if the file is a regular file, a symbolic link, or a directory
             return (
@@ -14,11 +14,11 @@ class Path:
             print(f'[ERROR]: unable to check <{file}> existence!')
 
     @staticmethod
-    def empty(directory: str):
+    def empty(directory: str) -> bool:
         return Path.size(directory) == 0
 
     @staticmethod
-    def size(directory: str):
+    def size(directory: str) -> int:
         try:
             # Return directory size
             return len(os.listdir(directory))
@@ -27,13 +27,13 @@ class Path:
             return 0
 
     @staticmethod
-    def get_parent_path():
+    def get_parent_path() -> str:
         current_path = os.getcwd()
         # Get the absolute path of the parent directory
         return Path.get_path_to(os.path.join(current_path, os.pardir))
 
     @staticmethod
-    def get_path_to(file: str, directory=None):
+    def get_path_to(file: str, directory=None) -> str:
         assert(type(file) is str)
 
         try:
@@ -47,7 +47,7 @@ class Path:
             print(f'[ERROR]: unable to get path to <{file}>!')
 
     @staticmethod
-    def create_directory(directory: str):
+    def create_directory(directory: str) -> None:
         assert(type(directory) is str)
 
         try:
@@ -57,7 +57,7 @@ class Path:
             print(f'[ERROR]: unable to create <{directory}> directory!')
 
     @staticmethod
-    def remove_file(file: str, directory=None):
+    def remove_file(file: str, directory=None) -> None:
         assert(type(file) is str)
 
         # Get the full path of the file to be removed
@@ -75,7 +75,7 @@ class Path:
             print(f'[ERROR]: unable to remove <{file}>!')
 
     @staticmethod
-    def clean_directory(directory: str):
+    def clean_directory(directory: str) -> None:
         assert(type(directory) is str)
 
         # Get the full path of the directory to clean
@@ -86,7 +86,7 @@ class Path:
             Path.remove_file(file, directory_path)
 
     @staticmethod
-    def remove_directory(directory: str):
+    def remove_directory(directory: str) -> None:
         # Get the full path of the directory to be removed
         directory_path = Path.get_path_to(directory)
 

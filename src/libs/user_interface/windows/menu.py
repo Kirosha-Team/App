@@ -1,14 +1,10 @@
 import time, datetime
 
 from src.utils.create import Create
-
-from src.constants import (
-    UPDATE_DELAY,
-    WEEKDAYS
-)
+from src.constants import *
 
 class Menu:
-    def __init__(self, on_button_pressed, on_display_info_pressed):
+    def __init__(self, on_button_pressed: callable, on_display_info_pressed: callable):
         self.callback = on_button_pressed  # Store the callback function for button press
         self.display = on_display_info_pressed  # Store the callback function for display info
 
@@ -16,7 +12,7 @@ class Menu:
         self.date = None  # Initialize date variable
         self.weather = None  # Initialize weather variable
 
-    def create(self, *args):
+    def create(self, *args) -> None:
         self.window = Create.window(1000, 600)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
 
@@ -26,7 +22,7 @@ class Menu:
         self.button_image_2 = Create.image(0, "button_2")  # Load the second button image
         self.button_image_3 = Create.image(0, "button_3")  # Load the third button image
 
-        def update():
+        def update() -> None:
             current_time = time.strftime('%H:%M')  # Get the current time in HH:MM format
 
             date = datetime.date.today()  # Get today's date

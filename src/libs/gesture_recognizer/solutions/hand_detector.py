@@ -9,16 +9,12 @@
     PUBLIC METHODS:
         process --> returns hand(s) landmarks
 """
+from typing import NamedTuple
+from mediapipe.python.solutions import hands
 
 import numpy
 
-from mediapipe.python.solutions import hands
-
-from src.constants import (
-    MIN_TRACKING_CONFIDENCE,
-    MIN_DETECTION_CONFIDENCE,
-    MAX_HANDS
-)
+from src.constants import *
 
 class HandDetector:
     def __init__(self):
@@ -30,6 +26,6 @@ class HandDetector:
             min_detection_confidence=MIN_DETECTION_CONFIDENCE  # Minimum confidence for detection
         )
 
-    def process(self, image: numpy.ndarray):
+    def process(self, image: numpy.ndarray) -> NamedTuple:
         # Process the input image to detect hands
         return self.Hands.process(image)

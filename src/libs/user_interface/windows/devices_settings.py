@@ -2,13 +2,13 @@ from src.libs.communicator.solutions.registry import Registry
 from src.utils.create import Create
 
 class DevicesSettings:
-    def __init__(self, on_button_pressed, on_save_pressed):
+    def __init__(self, on_button_pressed: callable, on_save_pressed: callable):
         self.callback = on_button_pressed  # Assign the callback function for button press
         self.save = on_save_pressed  # Assign the save function for saving data
 
         self.registry = Registry()  # Initialize the Registry instance
 
-    def create(self, data):
+    def create(self, data: list) -> None:
         self.window = Create.window(1000, 600)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
 

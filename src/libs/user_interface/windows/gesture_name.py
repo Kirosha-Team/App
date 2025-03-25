@@ -1,11 +1,11 @@
 from src.utils.create import Create
 
 class GestureName:
-    def __init__(self, on_button_pressed, on_save_pressed):
+    def __init__(self, on_button_pressed: callable, on_save_pressed: callable):
         self.save = on_save_pressed  # Assign the save callback function to an instance variable
         self.callback = on_button_pressed  # Assign the button pressed callback function to an instance variable
 
-    def create(self):
+    def create(self) -> None:
         self.window = Create.window(400, 250)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 250, 400)  # Create a canvas within the window
 

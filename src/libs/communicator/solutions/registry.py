@@ -13,12 +13,11 @@
 
 import os
 
-from src.constants import Path
-from src.constants import DEVICES_PATH
+from src.constants import *
 
 class Registry:
     @staticmethod
-    def write_device(address: tuple[str, int], data: list[str]):
+    def write_device(address: tuple[str, int], data: list[str]) -> None:
         port = address[1]  # Extract the port number from the address tuple
 
         file = DEVICES_PATH + f'/{port}.txt'  # Construct the file path using the port number
@@ -35,7 +34,7 @@ class Registry:
                 file.close()  # Close the file (optional, as 'with' handles it)
 
     @staticmethod
-    def rewrite_device(port: str, key: str, value: str):
+    def rewrite_device(port: str, key: str, value: str) -> None:
         assert (type(key) is str)  # Ensure key is a string
         assert (type(port) is str)  # Ensure port is a string
         assert (type(value) is str)  # Ensure value is a string
@@ -58,7 +57,7 @@ class Registry:
             new_file.close()  # Close the new file
 
     @staticmethod
-    def read_device(port: str):
+    def read_device(port: str) -> list[str]:
         assert (type(port) is str)  # Ensure port is a string
 
         file = DEVICES_PATH + f'/{port}.txt'  # Construct the file path using the port number
@@ -72,7 +71,7 @@ class Registry:
             return lines  # Return the list of lines read from the file
 
     @staticmethod
-    def remove_device(port: str):
+    def remove_device(port: str) -> None:
         assert (type(port) is str)  # Ensure port is a string
 
         file = DEVICES_PATH + f'/{port}.txt'  # Construct the file path using the port number
@@ -80,7 +79,7 @@ class Registry:
         Path.remove_file(file)  # Remove the specified file
 
     @staticmethod
-    def get_device(address: tuple[str, int]):
+    def get_device(address: tuple[str, int]) -> bool:
         port = address[1]  # Extract the port number from the address tuple
 
         file = DEVICES_PATH + f'/{port}.txt'  # Construct the file path using the port number
@@ -88,7 +87,7 @@ class Registry:
         return Path.exists(file)  # Return whether the file exists
 
     @staticmethod
-    def get_devices():
+    def get_devices() -> list:
         devices_data = []  # Initialize a list to hold device data
 
         if Path.empty(DEVICES_PATH):  # Check if the devices directory is empty

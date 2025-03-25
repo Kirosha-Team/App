@@ -2,11 +2,11 @@ from src.libs.communicator.solutions.registry import Registry
 from src.utils.create import Create
 
 class DevicesEditor:
-    def __init__(self, on_button_pressed):
+    def __init__(self, on_button_pressed: callable):
         self.callback = on_button_pressed  # Store the callback function for button presses
         self.registry = Registry()  # Initialize the registry to manage devices
 
-    def create(self):
+    def create(self) -> None:
         self.window = Create.window(1000, 600)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
 

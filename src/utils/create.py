@@ -1,16 +1,13 @@
 from tkinter import *
 
-from src.constants import (
-    Path,
-    ASSETS_PATH,
-    BOXES_TYPES
-)
+import numpy
 
+from src.constants import *
 from src.utils.calculate import screen_center
 
 class Create:
     @staticmethod
-    def window(width: int, height: int):
+    def window(width: int, height: int) -> Tk:
         window = Tk()  # Create a new Tkinter window instance
 
         x, y = screen_center(window, width, height)  # Calculate the center position for the window
@@ -24,7 +21,7 @@ class Create:
         return window  # Return the created window instance
 
     @staticmethod
-    def canvas(window, height: float, width: float):
+    def canvas(window, height: float, width: float) -> Canvas:
         canvas = Canvas(
             window,
             bg="#FFFFFF",  # Set background color to white
@@ -40,7 +37,7 @@ class Create:
         return canvas  # Return the created canvas instance
 
     @staticmethod
-    def label(canvas, x: float, y: float, text: str, point: int):
+    def label(canvas, x: float, y: float, text: str, point: int) -> Label:
          label = canvas.create_text(
             x,
             y,
@@ -53,7 +50,7 @@ class Create:
          return label  # Return the created label instance
 
     @staticmethod
-    def image(index: int, image: str):
+    def image(index: int, image: str) -> Image:
         image_path = ASSETS_PATH + f'/frame{index}/{image}.png'  # Construct the image path
 
         if Path.exists(image_path):  # Check if the image file exists
@@ -62,7 +59,7 @@ class Create:
             )
 
     @staticmethod
-    def frame(canvas, x: float, y: float, image):
+    def frame(canvas, x: float, y: float, image: Image) -> Frame:
         frame = canvas.create_image(
             x,
             y,
@@ -72,7 +69,7 @@ class Create:
         return frame  # Return the created frame instance
 
     @staticmethod
-    def button(image, x: float, y: float, w: float, h: float, callback=None, text=None):
+    def button(image, x: float, y: float, w: float, h: float, callback=None, text=None) -> Button:
         button = Button(
             image=image,
             borderwidth=0,  # No border width
@@ -92,7 +89,7 @@ class Create:
         return button  # Return the created button instance
 
     @staticmethod
-    def box(category: int, title: str, text: str):
+    def box(category: int, title: str, text: str) -> str:
         dialogue_box = BOXES_TYPES[category]  # Get the dialogue box type based on category
 
         if dialogue_box is not None:  # Check if the dialogue box type is valid
@@ -104,7 +101,7 @@ class Create:
             return box  # Return the created box instance
 
     @staticmethod
-    def input_box(x: float, y: float, width: float, height: float):
+    def input_box(x: float, y: float, width: float, height: float) -> Entry:
         input = Entry(
             bd=0,  # No border
             bg="#404040",  # Set background color to dark gray

@@ -1,20 +1,15 @@
 import os
 
-from tensorflow.python.ops.metrics_impl import false_negatives
-
 from src.utils.create import Create
-
-from src.constants import (
-    DATASETS_PATH
-)
+from src.constants import *
 
 class GesturesEditor:
-    def __init__(self, on_button_pressed, on_remove_gesture_pressed, on_retrain_pressed):
+    def __init__(self, on_button_pressed: callable, on_remove_gesture_pressed: callable, on_retrain_pressed: callable):
         self.callback = on_button_pressed  # Assign the button pressed callback function
         self.retrain = on_retrain_pressed  # Assign the retrain callback function
         self.remove = on_remove_gesture_pressed  # Assign the remove gesture callback function
 
-    def create(self):
+    def create(self) -> None:
         self.window = Create.window(1000, 600)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
 

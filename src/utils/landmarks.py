@@ -3,7 +3,7 @@ import numpy
 from mediapipe.python.solutions import hands
 from mediapipe.python.solutions import drawing_utils
 
-def draw(image: numpy.ndarray, multi_hand_landmarks=None):
+def draw(image: numpy.ndarray, multi_hand_landmarks=None) -> None:
     # Check if there are any hand landmarks to draw
     if multi_hand_landmarks:
         # Iterate through each set of hand landmarks

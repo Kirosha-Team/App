@@ -14,11 +14,7 @@
 
 from mediapipe_model_maker import gesture_recognizer
 
-from src.constants import (
-    Path,
-    MODEL_PATH,
-    DATASETS_PATH
-)
+from src.constants import *
 
 class ModelTrainer:
     def __init__(self):
@@ -47,7 +43,7 @@ class ModelTrainer:
         self.test_data = None
         self.train_data = None
 
-    def train(self):
+    def train(self) -> None:
         # Clean the model directory before training
         Path.clean_directory(MODEL_PATH)
 
@@ -62,14 +58,14 @@ class ModelTrainer:
             options=self.options,
         )
 
-    def get_accuracy(self):
+    def get_accuracy(self) -> tuple[int, int]:
         # Ensure the model is trained before evaluating accuracy
         assert (self.model is not None)
 
         # Evaluate the model's accuracy on the test data
         return self.model.evaluate(self.test_data, batch_size=1)
 
-    def export(self):
+    def export(self) -> None:
         # Ensure the model is trained before exporting
         assert (self.model is not None)
 
