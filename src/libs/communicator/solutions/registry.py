@@ -1,18 +1,17 @@
 """
     NAME: registry.py
-
     DESC: solution for adding, removing, rewriting devices data
 
-    STATIC METHODS:
-        write_device -> saves device id_address, port, name, functions in file
-        rewrite -> changes specific device data in file
-        read_device -> returns device id_address, port, name, functions
-        remove_device -> removes device file
-        get_device -> returns file existence
+    CLASS REGISTRY:
+        STATIC METHODS:
+            write_device --> saves device id_address, port, name, functions in file
+            rewrite --> changes specific device data in file
+            read_device --> returns device id_address, port, name, functions
+            remove_device --> removes device file
+            get_device --> returns file existence
 """
 
-import os
-
+from src.utils import *
 from src.constants import *
 
 class Registry:
@@ -91,7 +90,7 @@ class Registry:
         devices_data = []  # Initialize a list to hold device data
 
         if Path.empty(DEVICES_PATH):  # Check if the devices directory is empty
-            print('[WARNING]: devices directory is empty')  # Print a warning message
+            return devices_data
 
         for device in os.listdir(DEVICES_PATH):  # Iterate over each file in the devices directory
             port, file_format = device.split('.')  # Split the filename to get the port number
