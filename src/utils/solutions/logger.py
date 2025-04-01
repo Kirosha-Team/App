@@ -4,11 +4,12 @@ from src.utils.solutions.path import *
 
 from src.constants import *
 
-class Logger:
+class LoggerUtils:
     @staticmethod
-    def __convert(message: str) -> str:
+    def convert(message: str) -> str:
         return f'${message}'.replace('$', '\n    ')
 
+class Logger:
     def __init__(self, name: str):
         # Ensure the name is of type string
         assert(type(name) is str)
@@ -34,16 +35,16 @@ class Logger:
     def assertion(self, value: bool, message: str) -> None:
         # Log an error message if the assertion fails
         if not value:
-            self.logger.error(msg=self.__convert(message))
+            self.logger.error(msg=LoggerUtils.convert(message))
 
     def error(self, message: str) -> None:
         # Log an error message
-        self.logger.error(msg=self.__convert(message))
+        self.logger.error(msg=LoggerUtils.convert(message))
 
     def warning(self, message: str) -> None:
         # Log a warning message
-        self.logger.warning(msg=self.__convert(message))
+        self.logger.warning(msg=LoggerUtils.convert(message))
 
     def debug(self, message: str) -> None:
         # Log a debug message
-        self.logger.debug(msg=self.__convert(message))
+        self.logger.debug(msg=LoggerUtils.convert(message))
