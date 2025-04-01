@@ -11,7 +11,7 @@
             process --> callbacks gesture name, image, frame timestamp ms
 """
 
-import mediapipe, numpy
+import mediapipe
 
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
