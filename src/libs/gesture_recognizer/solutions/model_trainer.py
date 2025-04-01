@@ -3,25 +3,30 @@
 
     DESC: solution for creating gesture recognition model
 
-    PRIVATE METHODS:
-        __init__ -> initializes util
+    CLASS MODEL TRAINER:
+        PRIVATE METHODS:
+            __init__ --> initializes util
 
-    PUBLIC METHODS:
-        train -> returns model
-        get_accuracy -> tests model to get accuracy and loss
-        export -> creates a new model
+        PUBLIC METHODS:
+            train --> returns model
+            get_accuracy --> tests model to get accuracy and loss
+            export --> creates a new model
 """
 
 from mediapipe_model_maker import gesture_recognizer
 
+from src.utils import *
 from src.constants import *
 
 class ModelTrainer:
     def __init__(self):
-        # Check if the datasets directory is empty and warn the user if it is
+        # Check if the datasets directory is empty
         if Path.empty(DATASETS_PATH):
-            print(f'[WARNING]: datasets directory is empty. Required 1 or more gestures')
-            return
+            raise OSError("datasets directory is empty or missing")
+
+        # Check if the none gesture is missing
+        if not Path.exists(Path.get_path_to("None", DATASETS_PATH)) or not Path.exists(Path.get_path_to("none", DATASETS_PATH)):
+            raise OSError("none gesture is missing")
 
         # Load dataset from the specified folder with preprocessing parameters
         self.data = gesture_recognizer.Dataset.from_folder(
