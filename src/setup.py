@@ -1,9 +1,8 @@
-import os
-
 from io import BytesIO
 from urllib import request
 from zipfile import ZipFile
 
+from src.utils import *
 from src.constants import *
 
 def download_model() -> None:
@@ -29,6 +28,8 @@ if __name__ == '__main__':
     Path.create_directory(DEVICES_PATH)
     # Create the model directory if it doesn't exist
     Path.create_directory(MODEL_PATH)
+    # Create the logs directory if it doesn't exist
+    Path.create_directory(LOGS_PATH)
 
     download_model()
     download_samples()
