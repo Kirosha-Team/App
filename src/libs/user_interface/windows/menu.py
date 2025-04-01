@@ -1,9 +1,9 @@
 import time, datetime
 
-from src.utils.create import Create
 from src.constants import *
+from src.utils import *
 
-class Menu:
+class MainMenu:
     def __init__(self, on_button_pressed: callable, on_display_info_pressed: callable):
         self.callback = on_button_pressed  # Store the callback function for button press
         self.display = on_display_info_pressed  # Store the callback function for display info
@@ -12,7 +12,7 @@ class Menu:
         self.date = None  # Initialize date variable
         self.weather = None  # Initialize weather variable
 
-    def create(self, *args) -> None:
+    def create(self) -> None:
         self.window = Create.window(1000, 600)  # Create a window with specified dimensions
         self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
 

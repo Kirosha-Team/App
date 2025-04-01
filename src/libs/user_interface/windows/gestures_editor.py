@@ -1,7 +1,4 @@
-import os
-
-from src.utils.create import Create
-from src.constants import *
+from src.utils import *
 
 class GesturesEditor:
     def __init__(self, on_button_pressed: callable, on_remove_gesture_pressed: callable, on_retrain_pressed: callable):

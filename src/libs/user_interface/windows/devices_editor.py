@@ -1,5 +1,5 @@
-from src.libs.communicator.solutions.registry import Registry
-from src.utils.create import Create
+from src.libs.communicator import *
+from src.utils import *
 
 class DevicesEditor:
     def __init__(self, on_button_pressed: callable):

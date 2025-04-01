@@ -1,4 +1,4 @@
-from src.utils.create import Create
+from src.utils import *
 
 class GestureName:
     def __init__(self, on_button_pressed: callable, on_save_pressed: callable):
