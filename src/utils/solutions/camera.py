@@ -2,7 +2,7 @@ import cv2, numpy
 
 from src.constants import *
 
-class Utils:
+class CameraUtils:
     @staticmethod
     def convert(image: numpy.ndarray) -> numpy.ndarray:
         new_image = image.__copy__() # Copy the existing image
