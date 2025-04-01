@@ -1,14 +1,14 @@
 """
     NAME: gesture_recognizer.py
-
     DESC: solution for processing given image and calling results
 
-    PRIVATE METHODS:
-        __init__ --> initializes util
-        __result_callback --> calls when process results received
+    CLASS GESTURE RECOGNIZER:
+        PRIVATE METHODS:
+            __init__ --> initializes util
+            __result_callback --> calls when process results received
 
-    PUBLIC METHODS:
-        process --> callbacks gesture name, image, frame timestamp ms
+        PUBLIC METHODS:
+            process --> callbacks gesture name, image, frame timestamp ms
 """
 
 import mediapipe, numpy
@@ -17,24 +17,13 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python.vision import RunningMode
 
+from src.utils import *
 from src.constants import *
 
 class GestureRecognizer:
-    def __result_callback(self, *args) -> None:
-        if self.listener:  # Check if a listener is set
-            gesture = DEFAULT_GESTURE  # Default gesture if none detected
-
-            results = args[0]  # Get the results from the callback arguments
-
-            if results.gestures:  # Check if any gestures were detected
-                gesture = results.gestures[0][0].category_name.replace('\r', '')  # Extract the gesture name
-
-            self.listener(gesture)  # Notify the listener with the detected gesture
-
     def __init__(self, listener: callable):
         if not Path.exists(ASSET_PATH):  # Ensure the asset path exists
-            print(f'[ERROR]: gesture_recognizer.task nil or missing!')
-            return
+            raise OSError("asset directory is empty")
 
         assert (callable(listener))  # Ensure the listener is a callable function
 
@@ -56,6 +45,17 @@ class GestureRecognizer:
         )
 
         self.listener = listener  # Assign the listener to the instance variable
+
+    def __result_callback(self, *args) -> None:
+        if self.listener:  # Check if a listener is set
+            gesture = DEFAULT_GESTURE  # Default gesture if none detected
+
+            results = args[0]  # Get the results from the callback arguments
+
+            if results.gestures:  # Check if any gestures were detected
+                gesture = results.gestures[0][0].category_name.replace('\r', '')  # Extract the gesture name
+
+            self.listener(gesture)  # Notify the listener with the detected gesture
 
     def process(self, image: numpy.ndarray) -> None:
         mp_image = mediapipe.Image(
