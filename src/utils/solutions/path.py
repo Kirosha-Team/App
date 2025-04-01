@@ -11,7 +11,7 @@ class Path:
                     or os.path.isdir(file)
                     )
         except OSError:
-            print(f'[ERROR]: unable to check <{file}> existence!')
+            pass
 
     @staticmethod
     def empty(directory: str) -> bool:
@@ -23,7 +23,6 @@ class Path:
             # Return directory size
             return len(os.listdir(directory))
         except OSError:
-            print(f'[ERROR]: unable to check <{directory}> size!')
             return 0
 
     @staticmethod
@@ -44,7 +43,7 @@ class Path:
                 # Return the absolute path of the file
                 return os.path.abspath(file)
         except OSError:
-            print(f'[ERROR]: unable to get path to <{file}>!')
+            pass
 
     @staticmethod
     def create_directory(directory: str) -> None:
@@ -54,7 +53,7 @@ class Path:
             # Create the directory and any necessary parent directories
             os.makedirs(directory)
         except OSError:
-            print(f'[ERROR]: unable to create <{directory}> directory!')
+            pass
 
     @staticmethod
     def remove_file(file: str, directory=None) -> None:
@@ -72,7 +71,7 @@ class Path:
                     # Remove the file if it exists
                     os.unlink(file_path)
         except OSError:
-            print(f'[ERROR]: unable to remove <{file}>!')
+            pass
 
     @staticmethod
     def clean_directory(directory: str) -> None:
@@ -98,7 +97,5 @@ class Path:
                 if Path.empty(directory_path):
                     # Remove the directory if it is empty
                     os.rmdir(directory_path)
-                else:
-                    print(f'[ERROR]: <{directory}> is not empty!')
         except OSError:
-            print(f'[ERROR]: unable to remove <{directory}>!')
+            pass
