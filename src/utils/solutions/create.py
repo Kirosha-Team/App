@@ -1,9 +1,8 @@
 from tkinter import *
 
-import numpy
-
+from src.utils.solutions.calculate import *
+from src.utils.solutions.path import *
 from src.constants import *
-from src.utils.calculate import screen_center
 
 class Create:
     @staticmethod
@@ -14,14 +13,14 @@ class Create:
 
         window.geometry(f'{width}x{height}+{x}+{y}')  # Set the window size and position
         window.resizable(False, False)  # Disable window resizing
-       #window.overrideredirect(True)  # Remove window decorations (title bar, etc.)
+        # window.overrideredirect(True)  # Remove window decorations (title bar, etc.)
 
         window.focus_force()  # Force focus on the window
 
         return window  # Return the created window instance
 
     @staticmethod
-    def canvas(window, height: float, width: float) -> Canvas:
+    def canvas(window: Tk, height: float, width: float) -> Canvas:
         canvas = Canvas(
             window,
             bg="#FFFFFF",  # Set background color to white
@@ -37,7 +36,7 @@ class Create:
         return canvas  # Return the created canvas instance
 
     @staticmethod
-    def label(canvas, x: float, y: float, text: str, point: int) -> Label:
+    def label(canvas: Canvas, x: float, y: float, text: str, point: int) -> int:
          label = canvas.create_text(
             x,
             y,
@@ -59,7 +58,7 @@ class Create:
             )
 
     @staticmethod
-    def frame(canvas, x: float, y: float, image: Image) -> Frame:
+    def frame(canvas: Canvas, x: float, y: float, image: Image) -> int:
         frame = canvas.create_image(
             x,
             y,
@@ -69,7 +68,7 @@ class Create:
         return frame  # Return the created frame instance
 
     @staticmethod
-    def button(image, x: float, y: float, w: float, h: float, callback=None, text=None) -> Button:
+    def button(image: Image, x: float, y: float, w: float, h: float, callback=None, text=None) -> Button:
         button = Button(
             image=image,
             borderwidth=0,  # No border width
@@ -102,7 +101,7 @@ class Create:
 
     @staticmethod
     def input_box(x: float, y: float, width: float, height: float) -> Entry:
-        input = Entry(
+        entry = Entry(
             bd=0,  # No border
             bg="#404040",  # Set background color to dark gray
             fg="#FFFFFF",  # Set text color to white
@@ -110,11 +109,11 @@ class Create:
             font=('Inter Bold', 30)  # Set font style and size
         )
 
-        input.place(
+        entry.place(
             x=x,
             y=y,
             width=width,
             height=height,  # Place the input box at specified coordinates with given dimensions
         )
 
-        return input  # Return the created input box instance
+        return entry  # Return the created input box instance
