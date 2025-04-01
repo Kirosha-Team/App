@@ -1,13 +1,12 @@
 import logging
 
-from src.constants import *
+from src.utils.solutions.path import *
 
-# Create a formatter for log messages with specific formatting
-formatter = logging.Formatter(FORMAT)
+from src.constants import *
 
 class Logger:
     @staticmethod
-    def __convert(message: str):
+    def __convert(message: str) -> str:
         return f'${message}'.replace('$', '\n    ')
 
     def __init__(self, name: str):
@@ -20,8 +19,11 @@ class Logger:
             mode='w'
         )
 
+        # Create a formatter for log messages with specific formatting
+        self.formatter = logging.Formatter(FORMATTER)
+
         # Set the formatter for the handler to define the log message format
-        self.handler.setFormatter(formatter)
+        self.handler.setFormatter(self.formatter)
 
         # Create a logger with the specified name and set its logging level
         self.logger = logging.getLogger(name)
