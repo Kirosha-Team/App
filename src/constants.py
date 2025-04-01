@@ -1,7 +1,5 @@
 from tkinter import messagebox
 
-from src.utils.path import Path
-
 # Application configuration
 VERSION = '1.00.0'  # Current version of the application
 
@@ -17,7 +15,7 @@ LOGS_PATH = 'src/logs' # Path to logs
 GESTURE_RECOGNIZER_PATH = 'src/libs/gesture_recognizer' # Path to gesture recognizer library
 
 # Getting the asset path for the gesture recognizer model
-ASSET_PATH = Path.get_path_to('gesture_recognizer.task', MODEL_PATH)  # Fetching the model path using Path utility
+ASSET_PATH = MODEL_PATH + '/gesture_recognizer.task'  # Fetching the model path using Path utility
 
 # Links to the model and sample data
 MODEL_LINK = 'https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task'  # URL for the gesture recognizer model
@@ -70,4 +68,4 @@ MIN_GESTURE_NAME_LENGTH = 3
 MAX_GESTURE_NAME_LENGTH = 10
 
 # Logger configuration
-FORMAT = "%(name)s %(asctime)s %(levelname)s:  %(message)s"
+FORMATTER = "%(name)s %(asctime)s %(levelname)s:  %(message)s"
