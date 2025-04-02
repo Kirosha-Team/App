@@ -2,7 +2,7 @@
 <h1>
     KiroshaTeam/App
 </h1>
-Python application designed for Raspberry Pi devices
+Python application designed for gestures' controllable smart station.
 </div>
 <hr style="border:2px solid gray">
 <div>
