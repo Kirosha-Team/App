@@ -14,7 +14,7 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 ### Hardware requirements
 
 > [!NOTE]
-> The program requires: **1 gb** of RAM, **12 gb** of storage, **4 cores** of CPU
+> The program requires: **1 gb** of RAM, **12 gb** of storage, **4 cores** of CPU, **any** camera, **any** display.
 
 ``Raspberry Pi 3B``
 ``Camera Raspberry Pi 1.3``
@@ -35,41 +35,34 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 > We recommend downloading the latest release to avoid bugs.
 
 > [!WARNING]
-> There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on raspberry os
+> There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on **Raspberry Pi OS**.
 
 1. Open the repository:
-
-    ```
-    cd /path/to/repository
+   ```
+   cd /path/to/repository
    ```
 2. Create a new virtual environment:
-
-    ```
-    python -m venv .venv
+   ```
+   python -m venv .venv
    ```
 3. Activate the virtual environment:
-    
-    ```
-    source .venv/bin/activate
+   ```
+   source .venv/bin/activate
    ```
 4. Update **pip**:
-
-    ```
-    pip install --upgrade pip
+   ```
+   pip install --upgrade pip
    ```
 5. Download packages:
-    
-    ```
-    pip install -r requirements.txt
+   ```
+   pip install -r requirements.txt
    ```
 6. Run **setup.py**:
-    
-    ```
-    python setup.py
+   ```
+   python setup.py
    ```
 7. Add **app.py** to startup and then restart:
-    
-    ```
+   ```
    sudo nano /etc/profile
    python main.py &
    sudo reboot
