@@ -15,12 +15,14 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 
 ## Hardware requirements
 
-<img src="https://assets.raspberrypi.com/static/532b4c25752c4235d76cc41051baf9ab/9ff6b/877fb653-7b43-4931-9cee-977a22571f65_3b%2BAngle%2B2%2Brefresh.webp" alt="Board" style="width:30%"><img src="https://assets.raspberrypi.com/static/6a75fa481019db1ac6bca74e5192cb5b/9ff6b/ffa68a46-fd44-4995-9ad4-ac846a5563f1_Camera%2BV2%2BHero.webp" alt="Camera" style="width:30%"><img src="https://assets.raspberrypi.com/static/d93d3a26f4525829f55b34372cf65a5e/9ff6b/ZySo0K8jQArT0HDZ_TouchDisplay2desktop.webp" alt="Display" style="width:30%">
+> [!NOTE]
+> The program requires: **1 gb** of RAM, **12 gb** of storage, **4 cores** of CPU 
 
 ##
 
-> [!NOTE]
-> The program requires: **1 gb** of RAM, **10 gb** of storage, **4 cores** of CPU 
+``Raspberry Pi 3B``
+``Camera Raspberry Pi 1.3``
+``TFT LCD Display 7 Inch``
 
 ***
 
