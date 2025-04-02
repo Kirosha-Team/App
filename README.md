@@ -37,7 +37,6 @@ The <a href="https://alice.yandex.ru/station">smart station from Yandex</a> beca
     <img src="https://media.discordapp.net/attachments/773798084479418389/1356951991246520480/down.png?ex=67ee6f85&is=67ed1e05&hm=dcf9e13db4156f3b5a8f062633fdc4beca58bf37ab85636d8566d31faaf5f2b2&=&format=webp&quality=lossless" alt="Download" style="width:2%">
     Installation:
 </h2>
-New repository releases can be found <a href="https://github.com/Kirosha-Team/App/releases">here</a>
 </div>
 
 `1` Open the repository:
