@@ -5,9 +5,13 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
-### About this project
+## About this project
 
 The [smart station from Yandex](https://alice.yandex.ru/station) became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
+
+## Getting started
+
+Here you can find all the useful information for installing the program.
 
 ### Hardware requirements
 
@@ -69,6 +73,6 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
    sudo reboot
    ```
 
-### Contribution
+## Contribution
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
