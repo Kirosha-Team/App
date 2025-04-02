@@ -1,6 +1,6 @@
 <div align="center">
 <h1>
-    KiroshaTeam/App
+    Kirosha-Team/App
 </h1>
 Python application designed for gestures' controllable smart station.
 </div>
