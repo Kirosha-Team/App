@@ -18,6 +18,8 @@ Here you can find all the useful information for installing the program.
 > [!NOTE]
 > The program requires: **1 gb** of RAM, **12 gb** of storage, **4 cores** of CPU
 
+##
+
 ``Raspberry Pi 3B``
 ``Camera Raspberry Pi 1.3``
 ``TFT LCD Display 7 Inch``
@@ -34,6 +36,8 @@ Here you can find all the useful information for installing the program.
 
 > [!WARNING]
 > There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on raspberry os
+
+##
 
 1. Open the repository:
 
