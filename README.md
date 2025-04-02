@@ -59,7 +59,7 @@ New repository releases can be found <a href="https://github.com/Kirosha-Team/Ap
     pip install --upgrade pip
 `5` Download packages:
     
-    pip install -r requirements.txt`
+    pip install -r requirements.txt
 `6` Run **setup.py**:
     
     python setup.py
@@ -76,5 +76,5 @@ New repository releases can be found <a href="https://github.com/Kirosha-Team/Ap
     Contribution:
 </h2>
 Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+to discuss what you would like to change. <img src="https://png.pngtree.com/png-vector/20240614/ourlarge/pngtree-red-love-pixel-hearts-vector-png-image_12748715.png" alt="Heart" style="width:10%">
 </div>
