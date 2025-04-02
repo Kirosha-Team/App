@@ -11,8 +11,6 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 
 ## Getting started
 
-Here you can find all the useful information for installing the program.
-
 ### Hardware requirements
 
 > [!NOTE]
@@ -22,10 +20,14 @@ Here you can find all the useful information for installing the program.
 ``Camera Raspberry Pi 1.3``
 ``TFT LCD Display 7 Inch``
 
+##
+
 ### Software requirements
 
 ``Raspberry Pi OS (64-bit)``
 ``Python 3.10``
+
+##
 
 ### Installation
 
