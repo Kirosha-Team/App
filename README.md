@@ -9,7 +9,13 @@ Python application designed for gestures' controllable smart station.
 
 The [smart station from Yandex](https://alice.yandex.ru/station) became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
 
-## Hardware requirements
+## Getting started
+
+Here you can find all the useful information for installing the program.
+
+##
+
+### Hardware requirements
 
 > [!NOTE]
 > The program requires: **1 gb** of RAM, **12 gb** of storage, **4 cores** of CPU 
@@ -20,12 +26,12 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 ``Camera Raspberry Pi 1.3``
 ``TFT LCD Display 7 Inch``
 
-## Software requirements
+### Software requirements
 
 ``Raspberry Pi OS (64-bit)``
 ``Python 3.10``
 
-## Installation
+### Installation
 
 > [!TIP]
 > We recommend downloading the latest release to avoid bugs.
