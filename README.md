@@ -5,9 +5,6 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
-> [!NOTE]
-> Useful information that users should know, even when skimming content.
-
 ## ❔ About this project
 The [smart station from Yandex]("https://alice.yandex.ru/station") became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
 
@@ -19,29 +16,37 @@ The [smart station from Yandex]("https://alice.yandex.ru/station") became the ba
 ``Python 3.10``
 
 ## ⬇️ Installation
-`1` Open the repository:
+> [!TIP]
+> We recommend downloading the latest release to avoid bugs.
 
-    cd /path/to/repository
-`2` Create a new virtual environment:
+> [!WARNING]
+> There might be some issues with downloading **mediapipe-model-maker**.
 
-    python -m venv .venv
-`3` Activate the virtual environment:
-    
-    source .venv/bin/activate
-`4` Update **pip**:
+1. Open the repository:
 
-    pip install --upgrade pip
-`5` Download packages:
+    ```cd /path/to/repository```
+2. Create a new virtual environment:
+
+    ```python -m venv .venv```
+3. Activate the virtual environment:
     
-    pip install -r requirements.txt
-`6` Run **setup.py**:
+    ```source .venv/bin/activate```
+4. Update **pip**:
+
+    ```pip install --upgrade pip```
+5. Download packages:
     
-    python setup.py
-`7` Add **app.py** to startup and then restart:
+    ```pip install -r requirements.txt```
+6. Run **setup.py**:
     
-    sudo nano /etc/profile
-    python main.py &
-    sudo reboot
+    ```python setup.py```
+7. Add **app.py** to startup and then restart:
+    
+    ```
+   sudo nano /etc/profile
+   python main.py &
+   sudo reboot
+   ```
 
 ## ❤️ Contribution
 Pull requests are welcome. For major changes, please open an issue first
