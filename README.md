@@ -9,7 +9,7 @@ Python application designed for Raspberry Pi devices
 
 <div>
 <h2>
-    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951990814511324/info.png?ex=67ee6f85&is=67ed1e05&hm=e1740f9b9cb79ba5ec35c9fc308815ab9eb437bb2eaa59931e9a4cbdd285022e&=&format=webp&quality=lossless" alt="Info" style="width:2.5%">
+    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951990814511324/info.png?ex=67ee6f85&is=67ed1e05&hm=e1740f9b9cb79ba5ec35c9fc308815ab9eb437bb2eaa59931e9a4cbdd285022e&=&format=webp&quality=lossless" alt="Info" style="width:2%">
     About this project:
 </h2>
 The <a href="https://alice.yandex.ru/station">smart station from Yandex</a> became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
@@ -19,7 +19,7 @@ The <a href="https://alice.yandex.ru/station">smart station from Yandex</a> beca
 
 <div>
 <h2>
-    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951991594778849/scanner-image.png?ex=67ee6f85&is=67ed1e05&hm=8992ceb409d51eea065d93e1fdbd80b174a3cf571590c9cd52b606076cf72bb0&=&format=webp&quality=lossless" alt="Hardware" style="width:2.5%">
+    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951991594778849/scanner-image.png?ex=67ee6f85&is=67ed1e05&hm=8992ceb409d51eea065d93e1fdbd80b174a3cf571590c9cd52b606076cf72bb0&=&format=webp&quality=lossless" alt="Hardware" style="width:2%">
     Hardware requirements:
 </h2>
 
@@ -31,7 +31,7 @@ The <a href="https://alice.yandex.ru/station">smart station from Yandex</a> beca
 
 <div>
 <h2>
-    <img src="https://media.discordapp.net/attachments/773798084479418389/1356952020011188224/software-development1.png?ex=67ee6f8c&is=67ed1e0c&hm=05533707ce75a34dd803b3909eb4eeb7299d01074b0366e988562442e264e7e2&=&format=webp&quality=lossless" alt="Software" style="width:2.5%">
+    <img src="https://media.discordapp.net/attachments/773798084479418389/1356952020011188224/software-development1.png?ex=67ee6f8c&is=67ed1e0c&hm=05533707ce75a34dd803b3909eb4eeb7299d01074b0366e988562442e264e7e2&=&format=webp&quality=lossless" alt="Software" style="width:2%">
     Software requirements:
 </h2>
 </div>
@@ -43,7 +43,7 @@ The <a href="https://alice.yandex.ru/station">smart station from Yandex</a> beca
 
 <div>
 <h2>
-    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951991246520480/down.png?ex=67ee6f85&is=67ed1e05&hm=dcf9e13db4156f3b5a8f062633fdc4beca58bf37ab85636d8566d31faaf5f2b2&=&format=webp&quality=lossless" alt="Download" style="width:2.5%">
+    <img src="https://media.discordapp.net/attachments/773798084479418389/1356951991246520480/down.png?ex=67ee6f85&is=67ed1e05&hm=dcf9e13db4156f3b5a8f062633fdc4beca58bf37ab85636d8566d31faaf5f2b2&=&format=webp&quality=lossless" alt="Download" style="width:2%">
     Installation:
 </h2>
 New repository releases can be found <a href="https://github.com/Kirosha-Team/App/releases">here</a>
@@ -77,7 +77,7 @@ New repository releases can be found <a href="https://github.com/Kirosha-Team/Ap
 
 <div>
 <h2>
-    <img src="https://media.discordapp.net/attachments/773798084479418389/1356950282562441348/heart-Photoroom.png?ex=67ee6dee&is=67ed1c6e&hm=d4ecb6c4cfb100f682d95f263c7f4bbb87967c55140c92f1e12e837b57937872&=&format=webp&quality=lossless" alt="Heart" style="width:2.5%">
+    <img src="https://media.discordapp.net/attachments/773798084479418389/1356950282562441348/heart-Photoroom.png?ex=67ee6dee&is=67ed1c6e&hm=d4ecb6c4cfb100f682d95f263c7f4bbb87967c55140c92f1e12e837b57937872&=&format=webp&quality=lossless" alt="Heart" style="width:2%">
     Contribution:
 </h2>
 Pull requests are welcome. For major changes, please open an issue first
