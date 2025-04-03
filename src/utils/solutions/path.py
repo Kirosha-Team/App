@@ -1,3 +1,19 @@
+"""
+    NAME: path.py
+    DESC: solution for managing components' paths
+
+    CLASS PATH:
+        STATIC METHODS:
+            exists --> checks the existence of component path
+            empty --> checks emptiness of directory
+            size --> returns amount of components inside directory
+            get_path_to --> return path to component
+            create_directory --> creates new directory
+            remove_file --> removes file
+            clean_directory --> removes all components inside directory
+            remove_directory --> cleans and removes directory
+"""
+
 import os
 
 class Path:
@@ -24,12 +40,6 @@ class Path:
             return len(os.listdir(directory))
         except OSError:
             return 0
-
-    @staticmethod
-    def get_parent_path() -> str:
-        current_path = os.getcwd()
-        # Get the absolute path of the parent directory
-        return Path.get_path_to(os.path.join(current_path, os.pardir))
 
     @staticmethod
     def get_path_to(file: str, directory=None) -> str:
