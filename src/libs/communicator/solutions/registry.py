@@ -22,7 +22,7 @@ class Registry:
         file = DEVICES_PATH + f'/{port}.txt'
 
         if not Path.exists(file):
-            with open(file, 'w') as file:  # Open the file in write mode
+            with open(file, 'w') as file:
                 file.write(address[0] + "\n")  # Write the device address to the file
                 file.write(str(address[1]) + "\n")  # Write the port number to the file
                 file.write(data[0] + "\n")  # Write the first data entry to the file
