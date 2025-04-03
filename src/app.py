@@ -5,20 +5,21 @@ from src.libs.user_interface import *
 from src.utils import *
 
 class App:
-    def __activate_window(self, boolean: bool) -> None:
-        self.__current_window.window.attributes('-disabled', boolean)
+    def __deactivate_window(self, boolean: bool) -> None:
+        self.__current_window.roots["window"].attributes('-disabled', boolean)
 
     def __reset_window(self, *args) -> None:
-        self.__current_window.window.destroy()
+        self.__current_window.roots["window"].destroy()
         self.__current_window.create(*args)
 
     def __set_window(self, index=None, *args) -> None:
         if index is not None:
             self.__current_window = self.__windows[index]
             self.__current_window.create(*args)
+            self.__current_window.roots["window"].mainloop()
         else:
             if self.__current_window:
-                self.__current_window.window.destroy()
+                self.__current_window.roots["window"].destroy()
                 self.__current_window = None
 
     def __reset_video_capture(self) -> None:
@@ -165,11 +166,8 @@ class App:
             else:
                 self.__reset_communicator()
 
-            self.__set_window(
-                index=index,
-                *args
-            )
-        except OSError as reason:
+            self.__set_window(index,*args)
+        except Exception as reason:
             self.logger.warning(
                 f'failed to open window correctly$reason: {reason}\nthis warning can be ignored'
             )
@@ -272,7 +270,7 @@ class App:
             )
         else:
             self.logger.warning(
-                'failed to save gesture$reason: unknown'
+                'failed to save gesture$reason: video capture is still running'
             )
 
             self.create.box(
@@ -314,7 +312,7 @@ class App:
             'retraining model'
         )
 
-        self.__activate_window(False)
+        self.__deactivate_window(True)
 
         if self.gesture_recognizer:
             self.gesture_recognizer.recognizer.close()
@@ -354,7 +352,7 @@ class App:
 
         self.gesture_recognizer = GestureRecognizer(self.__on_gesture_received)
 
-        self.__activate_window(True)
+        self.__deactivate_window(False)
 
     def __on_remove_gesture_pressed(self, name: str) -> None:
         self.logger.debug(
