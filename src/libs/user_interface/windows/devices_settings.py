@@ -1,106 +1,98 @@
+from src.libs.user_interface.assets import *
 from src.libs.communicator import *
 from src.utils import *
 
 class DevicesSettings:
     def __init__(self, on_button_pressed: callable, on_save_pressed: callable):
-        self.callback = on_button_pressed  # Assign the callback function for button press
-        self.save = on_save_pressed  # Assign the save function for saving data
+        self.callback = on_button_pressed
+        self.save = on_save_pressed
 
-        self.registry = Registry()  # Initialize the Registry instance
+        self.registry = Registry()
 
     def create(self, data: list) -> None:
-        self.window = Create.window(1000, 600)  # Create a window with specified dimensions
-        self.canvas = Create.canvas(self.window, 600, 1000)  # Create a canvas within the window
+        self.roots = create_default_window()
+        self.assets = load_default_components()
 
-        self.image_image_1 = Create.image(1, "image_1")  # Load the first image
-        self.image_image_2 = Create.image(1, "image_2")  # Load the second image
-        self.image_image_3 = Create.image(1, "image_5")  # Load the third image
-        self.button_image_1 = Create.image(1, "button_1")  # Load the first button image
-        self.button_image_2 = Create.image(1, "button_6")  # Load the second button image
-        self.button_image_3 = Create.image(1, "button_3")  # Load the third button image
-
-        self.count = 0  # Initialize a counter for input fields
-        self.input_data = {}  # Dictionary to store input data
+        self.count = 0
+        self.input_data = {}
 
         Create.frame(
-            self.canvas,
+            self.roots["canvas"],
             500.0,
             300.0,
-            self.image_image_1  # Create a frame with the first image
+            self.assets["background_image"]
         )
 
         Create.button(
-            self.button_image_1,
+            self.assets["exit_button_image"],
             35.0,
             35.0,
             70.0,
             70.0,
-            lambda: self.callback(2, False, False)  # Create a button that triggers the callback
+            lambda: self.callback(2, False, False)  # Return to the devices editor window
         )
 
         Create.button(
-            self.button_image_3,
+            self.assets["retrain_button_image"],
             895.0,
             35.0,
             70.0,
             70.0,
-            lambda: self.save(data, self.input_data)  # Create a button that saves data
+            lambda: self.save(data, self.input_data)
         )
 
-        for line in data[3:]:  # Iterate over the data starting from the fourth line
-            key, value = line.split('=')  # Split each line into key and value
+        for line in data[3:]:
+            key, value = line.split('=')
 
-            self.count += 1  # Increment the counter
+            self.count += 1
 
-            x_distance = 500 if self.count > 3 else 0  # Determine x position based on count
-            y_distance = (165 * (self.count - 4)) if self.count > 3 else (165 * (self.count - 1))  # Determine y position
+            x_distance = 500 if self.count > 3 else 0
+            y_distance = (165 * (self.count - 4)) if self.count > 3 else (165 * (self.count - 1))
 
             Create.frame(
-                self.canvas,
+                self.roots["canvas"],
                 250.0 + x_distance,
                 195.0 + y_distance,
-                self.image_image_2  # Create a frame for each input field
+                self.assets["button_background_image"]
             )
 
             Create.label(
-                self.canvas,
+                self.roots["canvas"],
                 136.0 + x_distance,
                 173.0 + y_distance,
                 key,
-                36  # Create a label for the key
+                36
             )
 
             Create.frame(
-                self.canvas,
+                self.roots["canvas"],
                 375.0 + x_distance,
                 195.0 + y_distance,
-                self.button_image_2,  # Create a frame for the button
+                self.assets["button_image"]
             )
 
             input = Create.input_box(
                 290 + x_distance,
                 165 + y_distance,
                 170,
-                60  # Create an input box for user input
+                60
             )
 
-            input.insert(0, value)  # Pre-fill the input box with the value
+            input.insert(0, value)
 
-            self.input_data[key] = input  # Store the input box in the dictionary
+            self.input_data[key] = input
 
             Create.frame(
-                self.canvas,
+                self.roots["canvas"],
                 70.0 + x_distance,
                 195.0 + y_distance,
-                self.image_image_3  # Create a frame for the third image
+                self.assets["sparkle_image"]
             )
 
         Create.label(
-            self.canvas,
+            self.roots["canvas"],
             340.0,
             46.0,
             f'{data[2]}',
-            40  # Create a label for the title
+            40
         )
-
-        self.window.mainloop()  # Start the main event loop for the window

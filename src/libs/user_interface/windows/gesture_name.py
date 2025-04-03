@@ -1,48 +1,43 @@
+from src.libs.user_interface.assets import *
 from src.utils import *
 
 class GestureName:
     def __init__(self, on_button_pressed: callable, on_save_pressed: callable):
-        self.save = on_save_pressed  # Assign the save callback function to an instance variable
-        self.callback = on_button_pressed  # Assign the button pressed callback function to an instance variable
+        self.save = on_save_pressed
+        self.callback = on_button_pressed
 
     def create(self) -> None:
-        self.window = Create.window(400, 250)  # Create a window with specified dimensions
-        self.canvas = Create.canvas(self.window, 250, 400)  # Create a canvas within the window
-
-        self.image_image_1 = Create.image(2, "image_1")  # Load the first image
-        self.button_image_1 = Create.image(2, "button_1")  # Load the first button image
-        self.button_image_2 = Create.image(2, "button_2")  # Load the second button image
+        self.roots = create_box_window()
+        self.assets = load_box_components()
 
         Create.frame(
-            self.canvas,
+            self.roots["canvas"],
             200.0,
             125.0,
-            self.image_image_1  # Create a frame on the canvas with the first image
+            self.assets["background_image"]
         )
 
         Create.button(
-            self.button_image_1,
+            self.assets["save_button_image"],
             10.0,
             170.0,
             180.0,
             70.0,
-            lambda: self.save(self.entry.get())  # Set up a button that calls the save function with the entry text
+            lambda: self.save(self.entry.get()) # Close the gesture name window
         )
 
         Create.button(
-            self.button_image_2,
+            self.assets["cancel_button_image"],
             210.0,
             170.0,
             180.0,
             70.0,
-            lambda: self.callback(1, False, False)  # Set up a button that calls the callback function with a fixed argument
+            lambda: self.callback(1, False, False) # Return to the gestures window
         )
 
         self.entry = Create.input_box(
             15.0,
             70.0,
             370.0,
-            68.0  # Create an input box for user text input
+            68.0
         )
-
-        self.window.mainloop()  # Start the main event loop for the window
