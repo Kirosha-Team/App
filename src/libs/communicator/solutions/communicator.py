@@ -10,7 +10,7 @@
 
     CLASS COMMUNICATOR:
         PRIVATE METHODS:
-            __init__ --> initializes util
+            __init__ --> initializes solution
 
         PUBLIC METHODS:
             start --> starts listening and callbacks data, address
@@ -25,74 +25,66 @@ from src.constants import *
 class CommunicatorUtils:
     @staticmethod
     def get_ip_address() -> str:
-        # Create a UDP socket
         temporary_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
         try:
-            # Connect to a public DNS server (Google's 8.8.8.8) on port 80
             temporary_socket.connect(("8.8.8.8", 80))
 
-            # Return the local IP address of the socket
             return temporary_socket.getsockname()[0]
         finally:
-            # Ensure the socket is closed after use
             temporary_socket.close()
 
     @staticmethod
     def decode(data: bytes) -> list[str]:
-        # Decode the byte data to a string using UTF-8 and split it by underscores
         return data.decode('utf-8').split('_')
 
     @staticmethod
     def encode(data: str) -> bytes:
-        # Ensure the input data is of type string
         assert (type(data) is str)
 
         length = len(data)
 
-        # If the string is shorter than 10 characters, pad it with hyphens
         if length < 10:
             data += '-' * (10 - length)
 
-        # Convert the string to bytes using UTF-8 encoding
         return bytes(data, 'utf-8')
 
 class Communicator:
     def __init__(self, listener: callable):
-        assert(callable(listener))  # Ensure the listener is a callable function
+        assert(callable(listener))
 
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Create a UDP socket
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-        # self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)  # Uncomment to allow multiple sockets to bind to the same port
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)  # Enable broadcasting on the socket
+        # self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-        self.socket.bind(('', LOCAL_PORT))  # Bind the socket to the local port
+        self.socket.bind(('', LOCAL_PORT))
 
-        self._running = False  # Initialize the running state to False
-        self._callback = listener  # Store the listener callback function
+        self._running = False
+        self._callback = listener
 
     def start(self) -> None:
-        assert(self._running is False)  # Ensure the communicator is not already running
+        assert(self._running is False)
 
-        self._running = True  # Set the running state to True
+        self._running = True
 
-        while self._running:  # Continue running while the communicator is active
-            data, address = self.socket.recvfrom(BUFFER_SIZE)  # Receive data from the socket
+        while self._running:
+            data, address = self.socket.recvfrom(BUFFER_SIZE)
 
-            if data is not None:  # Check if data is received
-                data = CommunicatorUtils.decode(data)  # Decode the received data
+            if data is not None:
+                data = CommunicatorUtils.decode(data)
 
-                self._callback(data, address)  # Call the listener with the decoded data and address
+                self._callback(data, address)
 
     def stop(self) -> None:
-        assert(self._running is True)  # Ensure the communicator is currently running
+        assert(self._running is True)
 
-        self._running = False  # Set the running state to False
+        self._running = False
 
     def send(self, address: tuple[str, int], command: str) -> None:
-        command = CommunicatorUtils.encode(command)  # Encode the command to bytes
+        command = CommunicatorUtils.encode(command)
 
-        self.socket.sendto(command, address)  # Send the encoded command to the specified address
+        self.socket.sendto(command, address)
 
     def is_running(self) -> bool:
-        return self._running  # Return the current running state
+        return self._running
