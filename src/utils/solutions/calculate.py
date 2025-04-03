@@ -1,12 +1,19 @@
+"""
+    NAME: calculate.py
+    DESC: solution for calculating variables
+
+    PUBLIC METHODS:
+        accuracy --> returns rounded input value
+        screen_center --> returns X and Y of the display center
+"""
+
 from tkinter import Tk
 from src.constants import *
 
 def accuracy(value: int) -> int:
-    # Calculate the accuracy based on the provided value and maximum accuracy percentage
     return round(value * MAX_ACCURACY_PERCENTAGE)
 
 def screen_center(window: Tk, size_x: float, size_y: float) -> tuple[int, int]:
-    # Calculate the center position for the window based on screen dimensions and window size
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
 
