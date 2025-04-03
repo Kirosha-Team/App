@@ -4,67 +4,70 @@
 
     CLASS GESTURE RECOGNIZER:
         PRIVATE METHODS:
-            __init__ --> initializes util
+            __init__ --> initializes solution
             __result_callback --> calls when process results received
 
         PUBLIC METHODS:
             process --> callbacks gesture name, image, frame timestamp ms
 """
 
-import mediapipe
+try:
+    import mediapipe
 
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
-from mediapipe.tasks.python.vision import RunningMode
+    from mediapipe.tasks import python
+    from mediapipe.tasks.python import vision
+    from mediapipe.tasks.python.vision import RunningMode
+except ImportError:
+    raise ImportError("mediapipe is not installed")
 
 from src.utils import *
 from src.constants import *
 
 class GestureRecognizer:
     def __init__(self, listener: callable):
-        if not Path.exists(ASSET_PATH):  # Ensure the asset path exists
+        if not Path.exists(ASSET_PATH):
             raise OSError("asset directory is empty")
 
-        assert (callable(listener))  # Ensure the listener is a callable function
+        assert (callable(listener))
 
-        model_file = open(ASSET_PATH, "rb")  # Open the model file in binary read mode
-        model_data = model_file.read()  # Read the model data
-        model_file.close()  # Close the model file
+        model_file = open(ASSET_PATH, "rb")
+        model_data = model_file.read()
+        model_file.close()
 
         self.base_options = python.BaseOptions(
-            model_asset_buffer=model_data  # Set the model data as buffer
+            model_asset_buffer=model_data
         )
 
         self.options = vision.GestureRecognizerOptions(
             base_options=self.base_options,
-            running_mode=RunningMode.IMAGE,  # Set the running mode to live stream
+            running_mode=RunningMode.IMAGE
         )
 
         self.recognizer = vision.GestureRecognizer.create_from_options(
-            options=self.options  # Create the recognizer with the specified options
+            options=self.options
         )
 
-        self.listener = listener  # Assign the listener to the instance variable
+        self.listener = listener
 
     def __result_callback(self, *args) -> None:
-        if self.listener:  # Check if a listener is set
-            gesture = DEFAULT_GESTURE  # Default gesture if none detected
+        if self.listener:
+            gesture = DEFAULT_GESTURE
 
-            results = args[0]  # Get the results from the callback arguments
+            results = args[0]
 
-            if results.gestures:  # Check if any gestures were detected
-                gesture = results.gestures[0][0].category_name.replace('\r', '')  # Extract the gesture name
+            if results.gestures:
+                gesture = results.gestures[0][0].category_name.replace('\r', '')
 
-            self.listener(gesture)  # Notify the listener with the detected gesture
+            self.listener(gesture)
 
     def process(self, image: numpy.ndarray) -> None:
         mp_image = mediapipe.Image(
-            image_format=mediapipe.ImageFormat.SRGB,  # Set the image format to SRGB
-            data=image  # Assign the image data
+            image_format=mediapipe.ImageFormat.SRGB,
+            data=image
         )
 
         result = self.recognizer.recognize(
-            image=mp_image,  # Pass the image to the recognizer
+            image=mp_image
         )
 
-        self.__result_callback(result) # Send results to get the top gesture
+        self.__result_callback(result)

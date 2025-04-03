@@ -5,7 +5,7 @@
 
     CLASS MODEL TRAINER:
         PRIVATE METHODS:
-            __init__ --> initializes util
+            __init__ --> initializes solution
 
         PUBLIC METHODS:
             train --> returns model
@@ -13,33 +13,31 @@
             export --> creates a new model
 """
 
-from mediapipe_model_maker import gesture_recognizer
+try:
+    from mediapipe_model_maker import gesture_recognizer
+except ImportError:
+    raise ImportError("mediapipe-model-maker is not installed")
 
 from src.utils import *
 from src.constants import *
 
 class ModelTrainer:
     def __init__(self):
-        # Check if the datasets directory is empty
         if Path.empty(DATASETS_PATH):
             raise OSError("datasets directory is empty or missing")
 
-        # Check if the none gesture is missing
         if not Path.exists(Path.get_path_to("None", DATASETS_PATH)) or not Path.exists(Path.get_path_to("none", DATASETS_PATH)):
             raise OSError("none gesture is missing")
 
-        # Load dataset from the specified folder with preprocessing parameters
         self.data = gesture_recognizer.Dataset.from_folder(
             dirname=DATASETS_PATH,
             hparams=gesture_recognizer.HandDataPreprocessingParams()
         )
 
-        # Set hyperparameters for the model export directory
         self.hparams = gesture_recognizer.HParams(
             export_dir=MODEL_PATH
         )
 
-        # Initialize gesture recognizer options with the hyperparameters
         self.options = gesture_recognizer.GestureRecognizerOptions(
             hparams=self.hparams
         )
@@ -49,14 +47,11 @@ class ModelTrainer:
         self.train_data = None
 
     def train(self) -> None:
-        # Clean the model directory before training
         Path.clean_directory(MODEL_PATH)
 
-        # Split the dataset into training and testing data
         self.train_data, remaining_data = self.data.split(0.8)
         self.test_data, validation_data = remaining_data.split(0.5)
 
-        # Create the gesture recognizer model with training and validation data
         self.model = gesture_recognizer.GestureRecognizer.create(
             train_data=self.train_data,
             validation_data=validation_data,
@@ -64,15 +59,11 @@ class ModelTrainer:
         )
 
     def get_accuracy(self) -> tuple[int, int]:
-        # Ensure the model is trained before evaluating accuracy
         assert (self.model is not None)
 
-        # Evaluate the model's accuracy on the test data
         return self.model.evaluate(self.test_data, batch_size=1)
 
     def export(self) -> None:
-        # Ensure the model is trained before exporting
         assert (self.model is not None)
 
-        # Export the trained model
         self.model.export_model()
