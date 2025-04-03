@@ -1,6 +1,6 @@
 """
     NAME: assets.py
-    DESC: ui loader
+    DESC: ui components loader for different windows
 """
 
 from src.utils import Create
