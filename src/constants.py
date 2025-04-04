@@ -16,6 +16,8 @@ ASSET_PATH = MODEL_PATH + '/gesture_recognizer.task'
 # Links
 MODEL_LINK = 'https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task'
 SAMPLES_LINK = 'https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/rps_data_sample.zip'
+WEATHER_LINK = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
+LOCATION_LINK = 'http://ipinfo.io'
 
 # Repository parameters
 VERSION = '1.1.0'
@@ -37,8 +39,8 @@ MAX_ACCURACY_PERCENTAGE = 100
 
 # Camera parameters
 CAMERA_INDEX = 0
-INIT_DELAY = 5
-UPDATE_DELAY = 1
+INIT_DELAY = 5 # Seconds
+UPDATE_DELAY = 1 # Milliseconds
 
 # Image parameters
 FLIP_CODE = 1
@@ -49,7 +51,9 @@ MIN_GESTURE_NAME_LENGTH = 3
 MAX_GESTURE_NAME_LENGTH = 10
 
 # Logger parameters
-FORMATTER = "%(name)s %(asctime)s %(levelname)s:  %(message)s"
+LOGGING_FORMAT = "%(name)s %(asctime)s %(levelname)s:  %(message)s"
+OLD_SIGNATURE = '$'
+NEW_SIGNATURE = '\n    '
 
 # Datasets parameters
 MIN_GESTURES_AMOUNT = 2
@@ -62,5 +66,12 @@ WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт','Пт', 'Сб', 'Вс',]
 
 BOXES_TYPES = [messagebox.showinfo, messagebox.showwarning, messagebox.askyesno, messagebox.showerror]
 
-DEFAULT_WIN_NAME = "Tk"
+DEFAULT_WIN_NAME = "tk"
 DEFAULT_WIN_INDEX = 0
+
+TIME_UPDATE_DELAY = 30 * 1000 # Seconds * Milliseconds
+DATE_AND_WEATHER_UPDATE_DELAY = 60 * 1000 # Seconds * Milliseconds
+
+# Zone parameters
+TIME_FORMAT = '%H:%M'
+NO_TEMPERATURE = '~~'

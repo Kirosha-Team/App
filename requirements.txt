@@ -2,3 +2,4 @@ numpy~=1.26.4
 mediapipe~=0.10.11
 mediapipe-model-maker~=0.1.0.1
 opencv-python~=4.11.0.86
+requests~=2.32.3
