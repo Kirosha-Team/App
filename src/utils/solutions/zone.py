@@ -15,8 +15,13 @@
 
 import time, datetime
 
+from os import environ
+from dotenv import *
+
 from src.libs.communicator.solutions.communicator import CommunicatorUtils
 from src.constants import *
+
+load_dotenv()
 
 class Clock:
     @staticmethod
@@ -39,7 +44,7 @@ class Weather:
         if not location:
             return NO_TEMPERATURE
 
-        link = WEATHER_LINK.format(location['city'], WEATHER_TOKEN)
+        link = WEATHER_LINK.format(location['city'], environ.get("WEATHER_TOKEN"))
 
         weather_info = CommunicatorUtils.request(link)
 
