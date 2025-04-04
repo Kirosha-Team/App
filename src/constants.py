@@ -20,7 +20,7 @@ WEATHER_LINK = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&uni
 LOCATION_LINK = 'http://ipinfo.io'
 
 # Repository parameters
-VERSION = '1.1.0'
+VERSION = '1.2.0'
 
 # Recognition parameters
 MAX_HANDS = 2
