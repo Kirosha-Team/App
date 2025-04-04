@@ -5,6 +5,7 @@
     CLASS COMMUNICATOR UTILS:
         STATIC METHODS:
             get_ip_address --> returns ip address
+            request --> returns response data
             decode --> converts received data into tuple
             encode --> converts data to send into bytes
 
@@ -18,7 +19,9 @@
             send --> sends data to address
 """
 
-import socket
+import socket, requests
+
+from requests import *
 
 from src.constants import *
 
@@ -33,6 +36,15 @@ class CommunicatorUtils:
             return temporary_socket.getsockname()[0]
         finally:
             temporary_socket.close()
+
+    @staticmethod
+    def request(url: str):
+        try:
+            response = requests.get(url)
+
+            return response.json()
+        except HTTPError:
+            pass
 
     @staticmethod
     def decode(data: bytes) -> list[str]:
