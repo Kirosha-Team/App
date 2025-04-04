@@ -32,7 +32,7 @@ class GestureName:
             170.0,
             180.0,
             70.0,
-            lambda: self.callback(1, False, False) # Return to the gestures window
+            lambda: self.callback(1, False, False) # Return to the gestures editor window
         )
 
         self.entry = Create.input_box(

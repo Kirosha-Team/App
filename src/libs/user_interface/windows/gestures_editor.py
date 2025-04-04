@@ -27,7 +27,7 @@ class GesturesEditor:
             35.0,
             70.0,
             70.0,
-            lambda: self.callback(0) # Return to the main window
+            lambda: self.callback(0) # Return to the main menu window
         )
 
         Create.button(
