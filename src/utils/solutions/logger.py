@@ -25,7 +25,7 @@ from src.constants import *
 class LoggerUtils:
     @staticmethod
     def convert(message: str) -> str:
-        return f'${message}'.replace('$', '\n    ')
+        return f'${message}'.replace(OLD_SIGNATURE, NEW_SIGNATURE)
 
 class Logger:
     def __init__(self, name: str):
@@ -36,7 +36,7 @@ class Logger:
             mode='w'
         )
 
-        self.formatter = logging.Formatter(FORMATTER)
+        self.formatter = logging.Formatter(LOGGING_FORMAT)
 
         self.handler.setFormatter(self.formatter)
 
