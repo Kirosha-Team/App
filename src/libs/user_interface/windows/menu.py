@@ -1,5 +1,3 @@
-import time, datetime
-
 from src.libs.user_interface.assets import *
 from src.utils import *
 
@@ -16,16 +14,17 @@ class MainMenu:
         self.roots = create_default_window()
         self.assets = load_main_menu_components()
 
-        def update() -> None:
-            current_time = time.strftime('%H:%M')
+        def update_time() -> None:
+            self.roots["canvas"].itemconfig(tagOrId=self.time, text=Clock.get_time())
+            self.roots["window"].after(TIME_UPDATE_DELAY, update_time)
 
-            date = datetime.date.today()
-            weekday = WEEKDAYS[datetime.date.weekday(date)]
+        def update_date_and_weather() -> None:
+            date = Clock.get_date()
 
-            self.roots["canvas"].itemconfig(tagOrId=self.time, text=current_time)
-            self.roots["canvas"].itemconfig(tagOrId=self.date, text=f'{weekday}.\n{date.day}')
+            self.roots["canvas"].itemconfig(tagOrId=self.date, text=f'{Clock.get_weekday(date)}.\n{date.day}')
+            self.roots["canvas"].itemconfig(tagOrId=self.weather, text=f'{Weather.get_temperature()}°C')
 
-            self.roots["window"].after(UPDATE_DELAY, update)
+            self.roots["window"].after(DATE_AND_WEATHER_UPDATE_DELAY, update_date_and_weather)
 
         Create.frame(
             self.roots["canvas"],
@@ -88,8 +87,9 @@ class MainMenu:
             self.roots["canvas"],
             364.0,
             503.0,
-            '~~°C',
+            '',
             28
         )
 
-        update()
+        update_time()
+        update_date_and_weather()
