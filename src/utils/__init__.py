@@ -8,3 +8,4 @@ from src.utils.solutions.camera import *
 from src.utils.solutions.create import *
 from src.utils.solutions.logger import *
 from src.utils.solutions.path import *
+from src.utils.solutions.zone import *
