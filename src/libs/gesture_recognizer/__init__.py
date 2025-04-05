@@ -1,7 +1,7 @@
 """
-    NAME: gesture_recognizer.py
-    DESC: high-level library for gesture recognition,
-    hand detection and model training
+NAME: gesture_recognizer.py
+DESC: high-level library for gesture recognition,
+hand detection and model training
 """
 
 from src.libs.gesture_recognizer.solutions.gesture_recognizer import *

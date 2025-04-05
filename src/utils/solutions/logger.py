@@ -1,19 +1,19 @@
 """
-    NAME: logger.py
-    DESC: solution for catching errors, warnings, debugs
+NAME: logger.py
+DESC: solution for catching errors, warnings, debugs
 
-    CLASS LOGGER UTILS:
-        STATIC METHODS:
-            convert --> returns text with replaced $ with /n
+CLASS LOGGER UTILS:
+    STATIC METHODS:
+        convert --> returns text with replaced $ with /n
 
-    CLASS LOGGER:
-        PRIVATE METHODS:
-            __init__ --> initializes solution
+CLASS LOGGER:
+    PRIVATE METHODS:
+        __init__ --> initializes solution
 
-        PUBLIC METHODS:
-            error --> logs error in .log file
-            warning --> logs warning in .log file
-            debug --> logs debug in .log file
+    PUBLIC METHODS:
+        error --> logs error in .log file
+        warning --> logs warning in .log file
+        debug --> logs debug in .log file
 """
 
 import logging
@@ -22,39 +22,84 @@ from src.utils.solutions.path import *
 
 from src.constants import *
 
+
 class LoggerUtils:
     @staticmethod
-    def convert(message: str) -> str:
-        return f'${message}'.replace(OLD_SIGNATURE, NEW_SIGNATURE)
+    def convert(
+        message: str,
+    ) -> str:
+        return f"${message}".replace(
+            OLD_SIGNATURE,
+            NEW_SIGNATURE,
+        )
+
 
 class Logger:
-    def __init__(self, name: str):
-        assert(type(name) is str)
-
-        self.handler = handler = logging.FileHandler(
-            filename=Path.get_path_to(f'{name}.log', LOGS_PATH),
-            mode='w'
+    def __init__(
+        self,
+        name: str,
+    ):
+        assert (
+            type(
+                name
+            )
+            is str
         )
 
-        self.formatter = logging.Formatter(LOGGING_FORMAT)
+        self.handler = (
+            handler
+        ) = logging.FileHandler(
+            filename=Path.get_path_to(
+                f"{name}.log",
+                LOGS_PATH,
+            ),
+            mode="w",
+        )
 
-        self.handler.setFormatter(self.formatter)
+        self.formatter = logging.Formatter(
+            LOGGING_FORMAT
+        )
 
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.DEBUG)
-        self.logger.addHandler(handler)
+        self.handler.setFormatter(
+            self.formatter
+        )
 
-    def error(self, message: str) -> None:
+        self.logger = logging.getLogger(
+            name
+        )
+        self.logger.setLevel(
+            logging.DEBUG
+        )
+        self.logger.addHandler(
+            handler
+        )
+
+    def error(
+        self,
+        message: str,
+    ) -> None:
         self.logger.error(
-            msg=LoggerUtils.convert(message)
+            msg=LoggerUtils.convert(
+                message
+            )
         )
 
-    def warning(self, message: str) -> None:
+    def warning(
+        self,
+        message: str,
+    ) -> None:
         self.logger.warning(
-            msg=LoggerUtils.convert(message)
+            msg=LoggerUtils.convert(
+                message
+            )
         )
 
-    def debug(self, message: str) -> None:
+    def debug(
+        self,
+        message: str,
+    ) -> None:
         self.logger.debug(
-            msg=LoggerUtils.convert(message)
+            msg=LoggerUtils.convert(
+                message
+            )
         )

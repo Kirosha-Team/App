@@ -1,7 +1,7 @@
 """
-    NAME: user_interface.py
-    DESC: high-level ui manager for opening,
-    closing and updating windows
+NAME: user_interface.py
+DESC: high-level ui manager for opening,
+closing and updating windows
 """
 
 from src.libs.user_interface.windows.menu import *

@@ -1,6 +1,6 @@
 """
-    NAME: utils.py
-    DESC: collection of utils for different tasks
+NAME: utils.py
+DESC: collection of utils for different tasks
 """
 
 from src.utils.solutions.calculate import *
