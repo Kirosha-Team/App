@@ -38,34 +38,32 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 > There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on **Raspberry Pi OS**.
 
 1. Open the repository:
-   ```
+   ```commandline
    cd /path/to/repository
    ```
 2. Create a new virtual environment:
-   ```
+   ```commandline
    python -m venv .venv
    ```
 3. Activate the virtual environment:
-   ```
+   ```commandline
    source .venv/bin/activate
    ```
 4. Update **pip**:
-   ```
+   ```commandline
    pip install --upgrade pip
    ```
 5. Download packages:
-   ```
+   ```commandline
    pip install -r requirements.txt
    ```
-6. Run **setup.py**:
+6. Create **.env** file and add weather token
+   ```commandline
+   dotenv set WEATHER_TOKEN 'your token here'
    ```
+7. Run **setup.py**:
+   ```commandline
    python setup.py
-   ```
-7. Add **app.py** to startup and then restart:
-   ```
-   sudo nano /etc/profile
-   python main.py &
-   sudo reboot
    ```
 
 ## Contribution
