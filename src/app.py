@@ -667,10 +667,6 @@ class App:
             self.__change(
                 DEFAULT_WIN_INDEX
             )
-
-            self.logger.debug(
-                "initialized"
-            )
         except AttributeError as result:
             self.logger.error(
                 f"failed to initialize ui$info: {result}$if this error occur -> restart main.py"
@@ -760,6 +756,10 @@ class App:
     ):
         self.__import_modules()
         self.__run_modules()
+
+        self.logger.debug(
+            "attempting to initialize application..."
+        )
 
         self.__current_window = None
         self.__devices_data = (
