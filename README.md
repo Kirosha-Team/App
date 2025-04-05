@@ -57,7 +57,7 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
    ```commandline
    pip install -r requirements.txt
    ```
-6. Create **.env** file and add weather token
+6. Add weather token
    ```commandline
    dotenv set WEATHER_TOKEN 'your token here'
    ```
