@@ -65,7 +65,7 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
    ```commandline
    python setup.py
    ```
-8Run **app.py**:
+8. Run **app.py**:
    ```commandline
    python app.py
    ```
