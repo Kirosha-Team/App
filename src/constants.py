@@ -42,7 +42,7 @@ MAX_ACCURACY_PERCENTAGE = 100
 # Camera parameters
 CAMERA_INDEX = 0
 INIT_DELAY = 5  # Seconds
-UPDATE_DELAY = 1000  # Milliseconds
+UPDATE_DELAY = 1  # Milliseconds
 
 # Image parameters
 FLIP_CODE = 1

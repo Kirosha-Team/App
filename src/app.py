@@ -1,3 +1,5 @@
+import time
+
 from src.libs.gesture_recognizer import *
 from src.libs.user_interface import *
 from src.utils import *
@@ -98,10 +100,7 @@ class App:
             else:
                 self.logger.debug("successfully saved gesture")
 
-                self.__change(
-                    index=1,
-                    process=False,
-                )
+            self._saving = False
 
         new_image = CameraUtils.convert(image)
 
@@ -127,13 +126,13 @@ class App:
         self,
         gesture: str,
     ) -> None:
+        print(gesture)
+
         if gesture == DEFAULT_GESTURE or gesture == NO_GESTURE:
             return
 
         if len(self.__devices_data) == 0:
             return
-
-        print(gesture)
 
         for data in self.__devices_data:
             command = None
@@ -153,6 +152,8 @@ class App:
                     data[0],
                     int(data[1]),
                 )
+
+                print(f"sending command {command}\naddress: {address}")
 
                 self.communicator.send(
                     address=address,
@@ -315,9 +316,18 @@ class App:
 
             self._count = 0
             self._name = name
+            self._saving = True
 
             self.__set_video_capture(
                 callback=self.__process_saving,
+            )
+
+            while self._saving is True:
+                time.sleep(1)
+
+            self.__change(
+                index=1,
+                process=False,
             )
         else:
             self.logger.warning("failed to save gesture$reason: video capture is still is_running")
@@ -357,7 +367,7 @@ class App:
 
             self.logger.debug("successfully saved changes")
 
-            self.data = self.registry.get_devices()
+            self.__devices_data = self.registry.get_devices()
             self.__reset_window(self.registry.read_device(data[1]))
 
     def __on_retrain_pressed(
