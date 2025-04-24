@@ -26,12 +26,8 @@ class Create:
     def window(
         width: int,
         height: int,
-    ) -> (
-        Tk
-    ):
-        window = (
-            Tk()
-        )
+    ) -> Tk:
+        window = Tk()
 
         (
             x,
@@ -42,14 +38,16 @@ class Create:
             height,
         )
 
-        window.geometry(
-            f"{width}x{height}+{x}+{y}"
-        )
+        window.geometry(f"{width}x{height}+{x}+{y}")
         window.resizable(
             False,
             False,
         )
-        # window.overrideredirect(True)
+        """
+        window.overrideredirect(
+            True
+        )
+        """
 
         window.focus_force()
 
@@ -94,8 +92,7 @@ class Create:
             fill="#FFFFFF",
             font=(
                 "Inter Bold",
-                point
-                * -1,
+                point * -1,
             ),
         )
 
@@ -106,17 +103,12 @@ class Create:
         index: int,
         image: str,
     ) -> Image:
-        image_path = (
-            ASSETS_PATH
-            + f"/frame{index}/{image}.png"
-        )
+        image_path = ASSETS_PATH + f"/frame{index}/{image}.png"
 
-        if Path.exists(
-            image_path
-        ):
-            return PhotoImage(
-                file=image_path
-            )
+        if Path.exists(image_path):
+            return PhotoImage(file=image_path)
+        else:
+            raise OSError(f"failed to load {image}")
 
     @staticmethod
     def frame(
@@ -167,14 +159,9 @@ class Create:
         title: str,
         text: str,
     ) -> str:
-        dialogue_box = BOXES_TYPES[
-            category
-        ]
+        dialogue_box = BOXES_TYPES[category]
 
-        if (
-            dialogue_box
-            is not None
-        ):
+        if dialogue_box is not None:
             box = dialogue_box(
                 title,
                 text,

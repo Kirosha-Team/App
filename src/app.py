@@ -1,7 +1,3 @@
-from threading import (
-    Thread,
-)
-
 from src.libs.gesture_recognizer import *
 from src.libs.user_interface import *
 from src.utils import *
@@ -12,9 +8,7 @@ class App:
         self,
         boolean: bool,
     ) -> None:
-        self.__current_window.roots[
-            "window"
-        ].attributes(
+        self.__current_window.roots["window"].attributes(
             "-disabled",
             boolean,
         )
@@ -23,142 +17,95 @@ class App:
         self,
         *args,
     ) -> None:
-        self.__current_window.roots[
-            "window"
-        ].destroy()
-        self.__current_window.create(
-            *args
-        )
+        self.__current_window.roots["window"].destroy()
+        self.__current_window.create(*args)
+        self.__current_window.roots["window"].mainloop()
 
     def __set_window(
         self,
         index=None,
         *args,
     ) -> None:
-        if (
-            index
-            is not None
-        ):
-            self.__current_window = self.__windows[
-                index
-            ]
-            self.__current_window.create(
-                *args
-            )
-            self.__current_window.roots[
-                "window"
-            ].mainloop()
+        if index is not None:
+            self.__current_window = self.__windows[index]
+            self.__current_window.create(*args)
+            self.__current_window.roots["window"].mainloop()
         else:
-            if (
-                self.__current_window
-            ):
-                self.__current_window.roots[
-                    "window"
-                ].destroy()
+            if self.__current_window:
+                self.__current_window.roots["window"].destroy()
                 self.__current_window = None
 
     def __reset_video_capture(
         self,
     ) -> None:
-        if (
-            self.video_capture.is_running()
-        ):
+        if self.video_capture.is_running():
             self.video_capture.stop()
 
     def __set_video_capture(
         self,
         callback: callable,
-        use_thread=True,
     ) -> None:
-        if (
-            not self.video_capture.is_running()
-        ):
-            self.video_capture.change(
-                callback=callback
-            )
-
-            if use_thread:
-                self.video_capture_thread = Thread(
-                    target=lambda: self.video_capture.start()
-                )
-                self.video_capture_thread.start()
-            else:
-                self.video_capture.start()
+        if not self.video_capture.is_running():
+            self.video_capture.change(callback=callback)
+            self.video_capture.start()
 
     def __reset_communicator(
         self,
     ) -> None:
-        if (
-            self.communicator.is_running()
-        ):
+        if self.communicator.is_running():
             self.communicator.stop()
 
     def __set_communicator(
         self,
     ) -> None:
-        if (
-            not self.communicator.is_running()
-        ):
-            self.communicator_thread = Thread(
-                target=self.communicator.start
-            )
-            self.communicator_thread.start()
+        if not self.communicator.is_running():
+            self.communicator.start()
 
     def __get_hands(
         self,
         image: numpy.ndarray,
     ) -> list:
-        processed_image = self.hand_detector.process(
-            image
-        )
-        return (
-            processed_image.multi_hand_landmarks
-        )
+        processed_image = self.hand_detector.process(image)
+        return processed_image.multi_hand_landmarks
 
     def __process_recognition(
         self,
         image: numpy.ndarray,
     ) -> None:
-        new_image = CameraUtils.convert(
-            image
-        )
+        new_image = CameraUtils.convert(image)
 
-        if self.__get_hands(
-            new_image
-        ):
-            self.gesture_recognizer.process(
-                image=new_image
-            )
+        if self.__get_hands(new_image):
+            self.gesture_recognizer.process(image=new_image)
 
     def __process_saving(
         self,
         image: numpy.ndarray,
     ) -> None:
-        if (
-            self._count
-            == (
-                MAX_IMAGES
-                + 1
-            )
-        ):
+        if self._count == (MAX_IMAGES + 1):
             self.__reset_video_capture()
             CameraUtils.destroy_all_windows()
 
-            self.create.box(
+            self._box = self.create.box(
                 category=0,
                 title="Информация",
                 text="Жест успешно сохранён",
             )
 
-            return
+            if not self._box:
+                self.logger.debug("abort saving gesture")
 
-        new_image = CameraUtils.convert(
-            image
-        )
+                Path.remove_directory(DATASETS_PATH + f"/{self._name}")
+            else:
+                self.logger.debug("successfully saved gesture")
 
-        result = self.__get_hands(
-            new_image
-        )
+                self.__change(
+                    index=1,
+                    process=False,
+                )
+
+        new_image = CameraUtils.convert(image)
+
+        result = self.__get_hands(new_image)
 
         if result:
             self._count += 1
@@ -174,62 +121,37 @@ class App:
             result,
         )
 
-        CameraUtils.show(
-            image
-        )
+        CameraUtils.show(image)
 
     def __on_gesture_received(
         self,
         gesture: str,
     ) -> None:
-        if (
-            gesture
-            == DEFAULT_GESTURE
-            or gesture
-            == NO_GESTURE
-        ):
+        if gesture == DEFAULT_GESTURE or gesture == NO_GESTURE:
             return
 
-        if (
-            len(
-                self.__devices_data
-            )
-            == 0
-        ):
+        if len(self.__devices_data) == 0:
             return
 
-        for data in (
-            self.__devices_data
-        ):
+        print(gesture)
+
+        for data in self.__devices_data:
             command = None
 
-            for line in data[
-                3:
-            ]:
+            for line in data[3:]:
                 (
                     key,
                     value,
-                ) = line.split(
-                    "="
-                )
+                ) = line.split("=")
 
-                if (
-                    value
-                    == gesture
-                ):
+                if value == gesture:
                     command = key
                     break
 
             if command:
                 address = (
-                    data[
-                        0
-                    ],
-                    int(
-                        data[
-                            1
-                        ]
-                    ),
+                    data[0],
+                    int(data[1]),
                 )
 
                 self.communicator.send(
@@ -239,9 +161,7 @@ class App:
 
     def __on_server_received(
         self,
-        data: list[
-            str
-        ],
+        data: list[str],
         address: tuple[
             str,
             int,
@@ -252,24 +172,16 @@ class App:
             DEFAULT_COMMAND,
         )
 
-        self.logger.debug(
-            f"received message from client$address: {address}"
-        )
+        self.logger.debug(f"received message from client$address: {address}")
 
-        if not self.registry.get_device(
-            address
-        ):
-            self.logger.debug(
-                "saving client data"
-            )
+        if not self.registry.get_device(address):
+            self.logger.debug("attempting to save client data...")
 
             self.registry.write_device(
                 address,
                 data,
             )
-            self.data = (
-                self.registry.get_devices()
-            )
+            self.__devices_data = self.registry.get_devices()
 
             self.create.box(
                 category=0,
@@ -277,9 +189,7 @@ class App:
                 text="Новое умное устройство было обнаружено",
             )
 
-            self.logger.debug(
-                f"successfully saved client data$data: {data}"
-            )
+            self.logger.debug(f"successfully saved client data$data: {data}")
 
             self.__reset_window()
             self.__set_communicator()
@@ -291,14 +201,10 @@ class App:
         listen=True,
         *args,
     ) -> None:
-        self.logger.debug(
-            f"changing window$index: {index}"
-        )
+        self.logger.debug(f"changing window$index: {index}")
 
         try:
-            self.__set_window(
-                None
-            )
+            self.__set_window(None)
 
             if process:
                 self.__set_video_capture(
@@ -317,9 +223,7 @@ class App:
                 *args,
             )
         except Exception as reason:
-            self.logger.warning(
-                f"failed to open window correctly$reason: {reason}\nthis warning can be ignored"
-            )
+            self.logger.warning(f"failed to open window correctly$reason: {reason}\n")
 
             self.create.box(
                 category=1,
@@ -331,16 +235,9 @@ class App:
         self,
         name: str,
     ) -> None:
-        self.logger.debug(
-            "checking gesture name"
-        )
+        self.logger.debug("attempting to check gesture name...")
 
-        if (
-            len(
-                name
-            )
-            == 0
-        ):
+        if len(name) == 0:
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -349,12 +246,7 @@ class App:
 
             return
 
-        if (
-            len(
-                name
-            )
-            < MIN_GESTURE_NAME_LENGTH
-        ):
+        if len(name) < MIN_GESTURE_NAME_LENGTH:
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -363,12 +255,7 @@ class App:
 
             return
 
-        if (
-            len(
-                name
-            )
-            > MAX_GESTURE_NAME_LENGTH
-        ):
+        if len(name) > MAX_GESTURE_NAME_LENGTH:
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -377,9 +264,7 @@ class App:
 
             return
 
-        if (
-            not name.isalpha()
-        ):
+        if not name.isalpha():
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -393,9 +278,7 @@ class App:
             DATASETS_PATH,
         )
 
-        if Path.exists(
-            gesture_path
-        ):
+        if Path.exists(gesture_path):
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -404,13 +287,11 @@ class App:
 
             return
 
-        self.logger.debug(
-            "saving gesture images"
-        )
+        self.logger.debug("attempting to save gesture images...")
 
         self.__set_window()
 
-        self.create.box(
+        self._box = self.create.box(
             category=0,
             title="Информация",
             text="""
@@ -422,33 +303,24 @@ class App:
             """,
         )
 
-        if (
-            not self.video_capture.is_running()
-        ):
-            Path.create_directory(
-                gesture_path
-            )
+        if not self._box:
+            self.logger.debug("abort attempt to save gesture")
+
+            self.__set_window(3)
+
+            return
+
+        if not self.video_capture.is_running():
+            Path.create_directory(gesture_path)
 
             self._count = 0
             self._name = name
 
             self.__set_video_capture(
                 callback=self.__process_saving,
-                use_thread=False,
-            )
-
-            self.logger.debug(
-                "successfully saved gesture"
-            )
-
-            self.__change(
-                index=1,
-                process=False,
             )
         else:
-            self.logger.warning(
-                "failed to save gesture$reason: video capture is still running"
-            )
+            self.logger.warning("failed to save gesture$reason: video capture is still is_running")
 
             self.create.box(
                 category=1,
@@ -466,83 +338,56 @@ class App:
         data: list,
         input_data: list,
     ) -> None:
-        self.logger.debug(
-            "saving devices data"
-        )
+        self.logger.debug("attempting to save devices data...")
 
-        box = self.create.box(
+        self._box = self.create.box(
             category=2,
             title="Предупреждение",
             text="Вы уверены, что хотите сохранить изменения?",
         )
 
-        if box:
+        if self._box:
             for key in input_data:
-                input_box = input_data[
-                    key
-                ]
+                input_box = input_data[key]
                 self.registry.rewrite_device(
-                    data[
-                        1
-                    ],
+                    data[1],
                     key,
                     input_box.get(),
                 )
 
-            self.logger.debug(
-                "successfully saved changes"
-            )
+            self.logger.debug("successfully saved changes")
 
-            self.data = (
-                self.registry.get_devices()
-            )
-            self.__reset_window(
-                self.registry.read_device(
-                    data[
-                        1
-                    ]
-                )
-            )
+            self.data = self.registry.get_devices()
+            self.__reset_window(self.registry.read_device(data[1]))
 
     def __on_retrain_pressed(
         self,
     ) -> None:
-        self.logger.debug(
-            "retraining model"
-        )
+        self.logger.debug("attempting to retrain model...")
 
-        self.__deactivate_window(
-            True
-        )
-
-        if (
-            self.gesture_recognizer
-        ):
-            self.gesture_recognizer.recognizer.close()
-
-        self.create.box(
+        self._box = self.create.box(
             category=0,
             title="Информация",
             text="Обновление жестов. Это займёт некоторое время",
         )
 
+        if not self._box:
+            self.logger.debug("abort retraining model")
+            return
+
+        self.__deactivate_window(True)
+
+        if self.gesture_recognizer:
+            self.gesture_recognizer.recognizer.close()
+
         self.model_trainer.train()
 
-        accuracy_results = accuracy(
-            self.model_trainer.get_accuracy()[
-                1
-            ]
-        )
+        accuracy_results = accuracy(self.model_trainer.get_accuracy()[1])
 
         self.model_trainer.export()
 
-        if (
-            accuracy_results
-            >= MIN_ACCURACY_PERCENTAGE
-        ):
-            self.logger.debug(
-                "successfully trained model"
-            )
+        if accuracy_results >= MIN_ACCURACY_PERCENTAGE:
+            self.logger.debug("successfully retrained model")
 
             self.create.box(
                 category=0,
@@ -550,9 +395,7 @@ class App:
                 text="Обновление жестов прошло успешно",
             )
         else:
-            self.logger.warning(
-                f"training results are lower then expected:$minimum: {MIN_ACCURACY_PERCENTAGE}%$maximum: {MAX_ACCURACY_PERCENTAGE}%$received: {accuracy_results}%$this warning can be ignored"
-            )
+            self.logger.warning(f"training results are lower then expected:$minimum: {MIN_ACCURACY_PERCENTAGE}%$maximum: {MAX_ACCURACY_PERCENTAGE}%$received: {accuracy_results}%")
 
             self.create.box(
                 category=1,
@@ -560,28 +403,17 @@ class App:
                 text="Возникли проблемы при обновлении жестов. Рекомендуется повторно выполнить данную операцию",
             )
 
-        self.gesture_recognizer = GestureRecognizer(
-            self.__on_gesture_received
-        )
+        self.gesture_recognizer = GestureRecognizer(self.__on_gesture_received)
 
-        self.__deactivate_window(
-            False
-        )
+        self.__deactivate_window(False)
 
     def __on_remove_gesture_pressed(
         self,
         name: str,
     ) -> None:
-        self.logger.debug(
-            "removing gesture"
-        )
+        self.logger.debug("attempting to remove gesture...")
 
-        if (
-            name
-            == DEFAULT_GESTURE
-            or name
-            == NO_GESTURE
-        ):
+        if name == DEFAULT_GESTURE or name == NO_GESTURE:
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -590,12 +422,7 @@ class App:
 
             return
 
-        if (
-            Path.size(
-                DATASETS_PATH
-            )
-            <= MIN_GESTURES_AMOUNT
-        ):
+        if Path.size(DATASETS_PATH) <= MIN_GESTURES_AMOUNT:
             self.create.box(
                 category=1,
                 title="Предупреждение",
@@ -604,24 +431,20 @@ class App:
 
             return
 
-        box = self.create.box(
+        self._box = self.create.box(
             category=2,
             title="Предупреждение",
             text="Вы уверены, что хотите удалить жест?",
         )
 
-        if box:
-            self.logger.debug(
-                "successfully removed gesture"
-            )
+        if self._box:
+            self.logger.debug("successfully removed gesture")
 
             gesture_path = Path.get_path_to(
                 name,
                 DATASETS_PATH,
             )
-            Path.remove_directory(
-                gesture_path
-            )
+            Path.remove_directory(gesture_path)
 
             self.__reset_window()
 
@@ -632,8 +455,8 @@ class App:
             category=0,
             title="Информация",
             text=f"""
-            Версия: {VERSION}
-            IP-адрес станции: {CommunicatorUtils.get_ip_address()}
+            VERSION: {VERSION}
+            IP-ADDRESS: {CommunicatorUtils.get_ip_address()}
             """,
         )
 
@@ -651,9 +474,7 @@ class App:
                     self.__on_remove_gesture_pressed,
                     self.__on_retrain_pressed,
                 ),
-                DevicesEditor(
-                    self.__change
-                ),
+                DevicesEditor(self.__change),
                 GestureName(
                     self.__change,
                     self.__on_save_gesture_pressed,
@@ -664,13 +485,9 @@ class App:
                 ),
             ]
 
-            self.__change(
-                DEFAULT_WIN_INDEX
-            )
+            self.__change(DEFAULT_WIN_INDEX)
         except AttributeError as result:
-            self.logger.error(
-                f"failed to initialize ui$info: {result}$if this error occur -> restart main.py"
-            )
+            self.logger.error(f"failed to initialize ui$info: {result}")
 
             self.create.box(
                 category=3,
@@ -685,17 +502,9 @@ class App:
     ) -> None:
         try:
             self.__set_communicator()
-            self.__set_video_capture(
-                self.__process_recognition
-            )
-
-            self.video_capture_thread.join(
-                INIT_DELAY
-            )
+            self.__set_video_capture(self.__process_recognition)
         except AttributeError as result:
-            self.logger.error(
-                f"failed to initialize components$info: {result}$if this error occur -> run setup.py$then restart main.py"
-            )
+            self.logger.error(f"failed to initialize components$info: {result}")
 
             self.create.box(
                 category=3,
@@ -709,39 +518,21 @@ class App:
         self,
     ) -> None:
         try:
-            self.registry = (
-                Registry()
-            )
-            self.communicator = Communicator(
-                self.__on_server_received
-            )
+            self.registry = Registry()
+            self.communicator = Communicator(self.__on_server_received)
 
-            self.create = (
-                Create()
-            )
-            self.logger = Logger(
-                __name__
-            )
-            self.video_capture = (
-                VideoCapture()
-            )
+            self.create = Create()
+            self.logger = Logger(__name__)
+            self.video_capture = UsbInterface()
 
-            self.gesture_recognizer = GestureRecognizer(
-                self.__on_gesture_received
-            )
-            self.model_trainer = (
-                ModelTrainer()
-            )
-            self.hand_detector = (
-                HandDetector()
-            )
+            self.gesture_recognizer = GestureRecognizer(self.__on_gesture_received)
+            self.model_trainer = ModelTrainer()
+            self.hand_detector = HandDetector()
         except (
             ImportError,
             OSError,
         ) as result:
-            self.logger.error(
-                f"failed to load components$info: {result}$if this error occur -> run setup.py$then restart main.py"
-            )
+            self.logger.error(f"failed to load components$info: {result}")
 
             self.create.box(
                 category=3,
@@ -757,20 +548,13 @@ class App:
         self.__import_modules()
         self.__run_modules()
 
-        self.logger.debug(
-            "attempting to initialize application..."
-        )
+        self.logger.debug("attempting to initialize application...")
 
         self.__current_window = None
-        self.__devices_data = (
-            self.registry.get_devices()
-        )
+        self.__devices_data = self.registry.get_devices()
 
         self.__run_ui()
 
 
-if (
-    __name__
-    == "__main__"
-):
+if __name__ == "__main__":
     App()

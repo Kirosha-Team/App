@@ -39,16 +39,9 @@ class Logger:
         self,
         name: str,
     ):
-        assert (
-            type(
-                name
-            )
-            is str
-        )
+        assert type(name) is str
 
-        self.handler = (
-            handler
-        ) = logging.FileHandler(
+        self.handler = handler = logging.FileHandler(
             filename=Path.get_path_to(
                 f"{name}.log",
                 LOGS_PATH,
@@ -56,50 +49,28 @@ class Logger:
             mode="w",
         )
 
-        self.formatter = logging.Formatter(
-            LOGGING_FORMAT
-        )
+        self.formatter = logging.Formatter(LOGGING_FORMAT)
 
-        self.handler.setFormatter(
-            self.formatter
-        )
+        self.handler.setFormatter(self.formatter)
 
-        self.logger = logging.getLogger(
-            name
-        )
-        self.logger.setLevel(
-            logging.DEBUG
-        )
-        self.logger.addHandler(
-            handler
-        )
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(handler)
 
     def error(
         self,
         message: str,
     ) -> None:
-        self.logger.error(
-            msg=LoggerUtils.convert(
-                message
-            )
-        )
+        self.logger.error(msg=LoggerUtils.convert(message + "$if this error occur -> run setup.py$then restart main.py"))
 
     def warning(
         self,
         message: str,
     ) -> None:
-        self.logger.warning(
-            msg=LoggerUtils.convert(
-                message
-            )
-        )
+        self.logger.warning(msg=LoggerUtils.convert(message + "$this warning can be ignored"))
 
     def debug(
         self,
         message: str,
     ) -> None:
-        self.logger.debug(
-            msg=LoggerUtils.convert(
-                message
-            )
-        )
+        self.logger.debug(msg=LoggerUtils.convert(message))

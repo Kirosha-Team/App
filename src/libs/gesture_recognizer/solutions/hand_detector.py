@@ -28,9 +28,7 @@ try:
         drawing_utils,
     )
 except ImportError:
-    raise ImportError(
-        "mediapipe is not installed"
-    )
+    raise ImportError("mediapipe is not installed")
 
 from src.constants import *
 
@@ -65,6 +63,4 @@ class HandDetector:
         self,
         image: numpy.ndarray,
     ) -> NamedTuple:
-        return self.Hands.process(
-            image
-        )
+        return self.Hands.process(image)

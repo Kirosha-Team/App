@@ -31,66 +31,37 @@ load_dotenv()
 class Clock:
     @staticmethod
     def get_time():
-        return time.strftime(
-            TIME_FORMAT
-        )
+        return time.strftime(TIME_FORMAT)
 
     @staticmethod
     def get_date():
-        return (
-            datetime.date.today()
-        )
+        return datetime.date.today()
 
     @staticmethod
     def get_weekday(
         date: any,
     ):
-        return WEEKDAYS[
-            datetime.date.weekday(
-                date
-            )
-        ]
+        return WEEKDAYS[datetime.date.weekday(date)]
 
 
 class Weather:
     @staticmethod
     def get_temperature():
-        location = CommunicatorUtils.request(
-            LOCATION_LINK
-        )
+        location = CommunicatorUtils.request(LOCATION_LINK)
 
-        if (
-            not location
-        ):
+        if not location:
             return NO_TEMPERATURE
 
         link = WEATHER_LINK.format(
-            location[
-                "city"
-            ],
-            environ.get(
-                "WEATHER_TOKEN"
-            ),
+            location["city"],
+            environ.get("WEATHER_TOKEN"),
         )
 
-        weather_info = CommunicatorUtils.request(
-            link
-        )
+        weather_info = CommunicatorUtils.request(link)
 
-        if (
-            weather_info[
-                "cod"
-            ]
-            == 401
-        ):
+        if weather_info["cod"] == 401:
             return NO_TEMPERATURE
 
-        temperature = weather_info[
-            "main"
-        ][
-            "temp"
-        ]
+        temperature = weather_info["main"]["temp"]
 
-        return round(
-            temperature
-        )
+        return round(temperature)

@@ -19,6 +19,8 @@ CLASS COMMUNICATOR:
         send --> sends data to address
 """
 
+from threading import Thread
+
 import socket, requests
 
 from requests import *
@@ -28,9 +30,7 @@ from src.constants import *
 
 class CommunicatorUtils:
     @staticmethod
-    def get_ip_address() -> (
-        str
-    ):
+    def get_ip_address() -> str:
         temporary_socket = socket.socket(
             socket.AF_INET,
             socket.SOCK_DGRAM,
@@ -44,9 +44,7 @@ class CommunicatorUtils:
                 )
             )
 
-            return temporary_socket.getsockname()[
-                0
-            ]
+            return temporary_socket.getsockname()[0]
         finally:
             temporary_socket.close()
 
@@ -55,54 +53,28 @@ class CommunicatorUtils:
         url: str,
     ):
         try:
-            response = requests.get(
-                url
-            )
+            response = requests.get(url)
 
-            return (
-                response.json()
-            )
+            return response.json()
         except HTTPError:
             pass
 
     @staticmethod
     def decode(
         data: bytes,
-    ) -> list[
-        str
-    ]:
-        return data.decode(
-            "utf-8"
-        ).split(
-            "_"
-        )
+    ) -> list[str]:
+        return data.decode("utf-8").split("_")
 
     @staticmethod
     def encode(
         data: str,
     ) -> bytes:
-        assert (
-            type(
-                data
-            )
-            is str
-        )
+        assert type(data) is str
 
-        length = len(
-            data
-        )
+        length = len(data)
 
-        if (
-            length
-            < 10
-        ):
-            data += (
-                "-"
-                * (
-                    10
-                    - length
-                )
-            )
+        if length < 10:
+            data += "-" * (10 - length)
 
         return bytes(
             data,
@@ -115,9 +87,7 @@ class Communicator:
         self,
         listener: callable,
     ):
-        assert callable(
-            listener
-        )
+        assert callable(listener)
 
         self.socket = socket.socket(
             socket.AF_INET,
@@ -141,48 +111,43 @@ class Communicator:
         self._running = False
         self._callback = listener
 
+        def __run():
+            while self.socket.fileno() != -1:
+                if self._running is False:
+                    continue
+
+                (
+                    data,
+                    address,
+                ) = self.socket.recvfrom(BUFFER_SIZE)
+
+                if data is not None:
+                    data = CommunicatorUtils.decode(data)
+
+                    self._callback(
+                        data,
+                        address,
+                    )
+
+        self.socket_thread = Thread(target=__run)
+        self.socket_thread.start()
+
     def start(
         self,
     ) -> None:
-        assert (
-            self._running
-            is False
-        )
+        assert self._running is False
 
         self._running = True
-
-        while (
-            self._running
-        ):
-            (
-                data,
-                address,
-            ) = self.socket.recvfrom(
-                BUFFER_SIZE
-            )
-
-            if (
-                data
-                is not None
-            ):
-                data = CommunicatorUtils.decode(
-                    data
-                )
-
-                self._callback(
-                    data,
-                    address,
-                )
 
     def stop(
         self,
     ) -> None:
-        assert (
-            self._running
-            is True
-        )
+        assert self._running is True
 
         self._running = False
+
+    def destroy(self):
+        self.socket.close()
 
     def send(
         self,
@@ -192,9 +157,7 @@ class Communicator:
         ],
         command: str,
     ) -> None:
-        command = CommunicatorUtils.encode(
-            command
-        )
+        command = CommunicatorUtils.encode(command)
 
         self.socket.sendto(
             command,
@@ -204,6 +167,4 @@ class Communicator:
     def is_running(
         self,
     ) -> bool:
-        return (
-            self._running
-        )
+        return self._running

@@ -14,41 +14,27 @@ class GestureName:
     def create(
         self,
     ) -> None:
-        self.roots = (
-            create_box_window()
-        )
-        self.assets = (
-            load_box_components()
-        )
+        self.roots = create_box_window()
+        self.assets = load_box_components()
 
         Create.frame(
-            self.roots[
-                "canvas"
-            ],
+            self.roots["canvas"],
             200.0,
             125.0,
-            self.assets[
-                "background_image"
-            ],
+            self.assets["background_image"],
         )
 
         Create.button(
-            self.assets[
-                "save_button_image"
-            ],
+            self.assets["save_button_image"],
             10.0,
             170.0,
             180.0,
             70.0,
-            lambda: self.save(
-                self.entry.get()
-            ),  # Close the gesture name window
+            lambda: self.save(self.entry.get()),  # Close the gesture name window
         )
 
         Create.button(
-            self.assets[
-                "cancel_button_image"
-            ],
+            self.assets["cancel_button_image"],
             210.0,
             170.0,
             180.0,

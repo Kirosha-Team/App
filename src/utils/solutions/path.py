@@ -24,17 +24,7 @@ class Path:
     ) -> bool:
         try:
             # Check if the file is a regular file, a symbolic link, or a directory
-            return (
-                os.path.isfile(
-                    file
-                )
-                or os.path.islink(
-                    file
-                )
-                or os.path.isdir(
-                    file
-                )
-            )
+            return os.path.isfile(file) or os.path.islink(file) or os.path.isdir(file)
         except OSError:
             pass
 
@@ -42,12 +32,7 @@ class Path:
     def empty(
         directory: str,
     ) -> bool:
-        return (
-            Path.size(
-                directory
-            )
-            == 0
-        )
+        return Path.size(directory) == 0
 
     @staticmethod
     def size(
@@ -55,11 +40,7 @@ class Path:
     ) -> int:
         try:
             # Return directory size
-            return len(
-                os.listdir(
-                    directory
-                )
-            )
+            return len(os.listdir(directory))
         except OSError:
             return 0
 
@@ -68,12 +49,7 @@ class Path:
         file: str,
         directory=None,
     ) -> str:
-        assert (
-            type(
-                file
-            )
-            is str
-        )
+        assert type(file) is str
 
         try:
             if directory:
@@ -86,9 +62,7 @@ class Path:
                 )
             else:
                 # Return the absolute path of the file
-                return os.path.abspath(
-                    file
-                )
+                return os.path.abspath(file)
         except OSError:
             pass
 
@@ -96,18 +70,11 @@ class Path:
     def create_directory(
         directory: str,
     ) -> None:
-        assert (
-            type(
-                directory
-            )
-            is str
-        )
+        assert type(directory) is str
 
         try:
             # Create the directory and any necessary parent directories
-            os.makedirs(
-                directory
-            )
+            os.makedirs(directory)
         except OSError:
             pass
 
@@ -116,12 +83,7 @@ class Path:
         file: str,
         directory=None,
     ) -> None:
-        assert (
-            type(
-                file
-            )
-            is str
-        )
+        assert type(file) is str
 
         # Get the full path of the file to be removed
         file_path = Path.get_path_to(
@@ -130,21 +92,13 @@ class Path:
         )
 
         try:
-            if os.path.isdir(
-                file_path
-            ):
+            if os.path.isdir(file_path):
                 # If it's a directory, remove it using the remove_directory method
-                Path.remove_directory(
-                    file_path
-                )
+                Path.remove_directory(file_path)
             else:
-                if Path.exists(
-                    file_path
-                ):
+                if Path.exists(file_path):
                     # Remove the file if it exists
-                    os.unlink(
-                        file_path
-                    )
+                    os.unlink(file_path)
         except OSError:
             pass
 
@@ -152,22 +106,13 @@ class Path:
     def clean_directory(
         directory: str,
     ) -> None:
-        assert (
-            type(
-                directory
-            )
-            is str
-        )
+        assert type(directory) is str
 
         # Get the full path of the directory to clean
-        directory_path = Path.get_path_to(
-            directory
-        )
+        directory_path = Path.get_path_to(directory)
 
         # Iterate through all files in the directory and remove them
-        for file in os.listdir(
-            directory_path
-        ):
+        for file in os.listdir(directory_path):
             Path.remove_file(
                 file,
                 directory_path,
@@ -178,25 +123,15 @@ class Path:
         directory: str,
     ) -> None:
         # Get the full path of the directory to be removed
-        directory_path = Path.get_path_to(
-            directory
-        )
+        directory_path = Path.get_path_to(directory)
 
         try:
-            if Path.exists(
-                directory_path
-            ):
+            if Path.exists(directory_path):
                 # Clean the directory before attempting to remove it
-                Path.clean_directory(
-                    directory
-                )
+                Path.clean_directory(directory)
 
-                if Path.empty(
-                    directory_path
-                ):
+                if Path.empty(directory_path):
                     # Remove the directory if it is empty
-                    os.rmdir(
-                        directory_path
-                    )
+                    os.rmdir(directory_path)
         except OSError:
             pass

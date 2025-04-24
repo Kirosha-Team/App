@@ -24,9 +24,7 @@ try:
         RunningMode,
     )
 except ImportError:
-    raise ImportError(
-        "mediapipe is not installed"
-    )
+    raise ImportError("mediapipe is not installed")
 
 from src.utils import *
 from src.constants import *
@@ -37,69 +35,42 @@ class GestureRecognizer:
         self,
         listener: callable,
     ):
-        if not Path.exists(
-            ASSET_PATH
-        ):
-            raise OSError(
-                "asset directory is empty"
-            )
+        if not Path.exists(ASSET_PATH):
+            raise OSError("asset directory is empty")
 
-        assert callable(
-            listener
-        )
+        assert callable(listener)
 
         model_file = open(
             ASSET_PATH,
             "rb",
         )
-        model_data = (
-            model_file.read()
-        )
+        model_data = model_file.read()
         model_file.close()
 
-        self.base_options = python.BaseOptions(
-            model_asset_buffer=model_data
-        )
+        self.base_options = python.BaseOptions(model_asset_buffer=model_data)
 
         self.options = vision.GestureRecognizerOptions(
             base_options=self.base_options,
             running_mode=RunningMode.IMAGE,
         )
 
-        self.recognizer = vision.GestureRecognizer.create_from_options(
-            options=self.options
-        )
+        self.recognizer = vision.GestureRecognizer.create_from_options(options=self.options)
 
         self.listener = listener
 
-    def __result_callback(
-        self,
-        *args
-    ) -> None:
-        if (
-            self.listener
-        ):
+    def __result_callback(self, *args) -> None:
+        if self.listener:
             gesture = DEFAULT_GESTURE
 
-            results = args[
-                0
-            ]
+            results = args[0]
 
-            if (
-                results.gestures
-            ):
-                gesture = results.gestures[
-                    0
-                ][
-                    0
-                ].category_name.replace(
+            if results.gestures:
+                gesture = results.gestures[0][0].category_name.replace(
                     "\r",
                     "",
                 )
 
-            self.listener(
-                gesture
-            )
+            self.listener(gesture)
 
     def process(
         self,
@@ -110,10 +81,6 @@ class GestureRecognizer:
             data=image,
         )
 
-        result = self.recognizer.recognize(
-            image=mp_image
-        )
+        result = self.recognizer.recognize(image=mp_image)
 
-        self.__result_callback(
-            result
-        )
+        self.__result_callback(result)

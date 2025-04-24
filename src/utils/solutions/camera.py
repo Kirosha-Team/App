@@ -20,6 +20,10 @@ CLASS CAMERA:
         stop --> closes video capture
 """
 
+from threading import (
+    Thread,
+)
+
 import cv2, numpy
 
 from src.constants import *
@@ -29,12 +33,8 @@ class CameraUtils:
     @staticmethod
     def convert(
         image: numpy.ndarray,
-    ) -> (
-        numpy.ndarray
-    ):
-        new_image = (
-            image.__copy__()
-        )
+    ) -> numpy.ndarray:
+        new_image = image.__copy__()
         new_image = cv2.cvtColor(
             new_image,
             cv2.COLOR_BGR2RGB,
@@ -50,8 +50,7 @@ class CameraUtils:
     ) -> None:
         try:
             cv2.imwrite(
-                filename=DATASETS_PATH
-                + f"/{name}/{str(index)}.jpg",
+                filename=DATASETS_PATH + f"/{name}/{str(index)}.jpg",
                 img=image,
             )
         except OSError:
@@ -67,85 +66,164 @@ class CameraUtils:
         )
 
     @staticmethod
-    def destroy_all_windows() -> (
-        None
-    ):
+    def destroy_all_windows() -> None:
         cv2.destroyAllWindows()
 
 
-class VideoCapture:
+class __VideoCapture:
     def __init__(
         self,
     ):
         self.capture = None
+        self.thread = None
 
-        self.__running = False
-        self.__callback = None
+        self.running = False
+        self.callback = None
+
+    def change(
+        self,
+        callback: callable,
+    ):
+        raise NotImplementedError("change method must be called in sub-classes")
+
+    def start(
+        self,
+    ):
+        raise NotImplementedError("start method must be called in sub-classes")
+
+    def stop(
+        self,
+    ):
+        raise NotImplementedError("stop method must be called in sub-classes")
+
+    def running(
+        self,
+    ):
+        raise NotImplementedError("is_running method must be called in sub-classes")
+
+
+class UsbInterface(__VideoCapture):
+    def __init__(
+        self,
+    ):
+        super().__init__()
+
+        self.capture = cv2.VideoCapture(CAMERA_INDEX)
+
+        assert self.capture.isOpened()
+
+        def __run():
+            while self.capture.isOpened():
+                if self.running is False:
+                    continue
+
+                if self.callback is None:
+                    continue
+
+                (
+                    success,
+                    frame,
+                ) = self.capture.read()
+
+                if not success:
+                    continue
+
+                self.callback(
+                    cv2.flip(
+                        frame,
+                        FLIP_CODE,
+                    )
+                )
+
+                cv2.waitKey(delay=UPDATE_DELAY)
+
+        self.thread = Thread(target=__run)
+        self.thread.start()
 
     def change(
         self,
         callback: callable,
     ) -> None:
-        assert callable(
-            callback
-        )
+        assert callable(callback)
 
-        self.__callback = callback
+        self.callback = callback
 
     def start(
         self,
     ) -> None:
-        assert callable(
-            self.__callback
-        )
-
-        self.capture = cv2.VideoCapture(
-            CAMERA_INDEX
-        )
-
-        assert (
-            self.capture.isOpened()
-        )
-
-        self.__running = True
-
-        while (
-            self.capture.isOpened()
-        ):
-            (
-                success,
-                frame,
-            ) = (
-                self.capture.read()
-            )
-
-            cv2.waitKey(
-                delay=UPDATE_DELAY
-            )
-
-            if (
-                not success
-            ):
-                continue
-
-            self.__callback(
-                cv2.flip(
-                    frame,
-                    FLIP_CODE,
-                )
-            )
-
-        self.__running = False
-
-    def is_running(
-        self,
-    ) -> bool:
-        return (
-            self.__running
-            is True
-        )
+        self.running = True
 
     def stop(
         self,
     ) -> None:
+        self.running = False
+
+    def is_running(
+        self,
+    ) -> bool:
+        return self.running is True
+
+    def destroy(
+        self,
+    ) -> None:
         self.capture.release()
+
+
+class CliInterface(__VideoCapture):
+    def __init__(
+        self,
+    ):
+        super().__init__()
+
+        # self.capture = picamera2.Picamera()
+        self.capture.start()
+
+        assert self.capture.is_running()
+
+        def __run():
+            while self.capture.is_running():
+                if self.running is False:
+                    continue
+
+                if self.callback is None:
+                    continue
+
+                (frame) = self.capture.capture_array()
+
+                self.callback(
+                    cv2.flip(
+                        frame,
+                        FLIP_CODE,
+                    )
+                )
+
+        self.thread = Thread(target=__run)
+        self.thread.start()
+
+    def change(
+        self,
+        callback: callable,
+    ) -> None:
+        assert callable(callback)
+
+        self.callback = callback
+
+    def start(
+        self,
+    ) -> None:
+        self.running = True
+
+    def stop(
+        self,
+    ) -> None:
+        self.running = False
+
+    def is_running(
+        self,
+    ) -> bool:
+        return self.running is True
+
+    def destroy(
+        self,
+    ) -> None:
+        self.capture.stop()
