@@ -9,22 +9,29 @@ CLASS CAMERA UTILS:
         show --> creates window with image inside
         destroy_all_windows --> destroys all the showing windows
 
-CLASS CAMERA:
+CLASS VIDEO CAPTURE:
     PRIVATE METHODS:
         __init__ --> initializes solution
 
     PUBLIC METHODS:
         change --> changes callback function
         start --> runs video capture and callbacks input images
-        is_running --> returns video capture state
         stop --> closes video capture
+        is_running --> returns video capture state
+        destroy --> destroys video capture
+
+SUB-CLASS USB INTERFACE:
+    DESC: class for controlling USB camera
+
+SUB-CLASS CLI INTERFACE:
+    DESC: class for controlling CLI camera
 """
 
 from threading import (
     Thread,
 )
 
-import cv2, numpy
+import cv2, numpy, picamera2
 
 from src.constants import *
 
@@ -70,7 +77,7 @@ class CameraUtils:
         cv2.destroyAllWindows()
 
 
-class __VideoCapture:
+class VideoCapture:
     def __init__(
         self,
     ):
@@ -101,8 +108,13 @@ class __VideoCapture:
     ):
         raise NotImplementedError("is_running method must be called in sub-classes")
 
+    def destroy(
+        self,
+    ):
+        raise NotImplementedError("destroy method must be called in sub-classes")
 
-class UsbInterface(__VideoCapture):
+
+class UsbInterface(VideoCapture):
     def __init__(
         self,
     ):
@@ -169,13 +181,13 @@ class UsbInterface(__VideoCapture):
         self.capture.release()
 
 
-class CliInterface(__VideoCapture):
+class CliInterface(VideoCapture):
     def __init__(
         self,
     ):
         super().__init__()
 
-        # self.capture = picamera2.Picamera()
+        self.capture = picamera2.Picamera()
         self.capture.start()
 
         assert self.capture.is_running()
@@ -189,13 +201,13 @@ class CliInterface(__VideoCapture):
                     continue
 
                 (frame) = self.capture.capture_array()
-
-                self.callback(
-                    cv2.flip(
-                        frame,
-                        FLIP_CODE,
-                    )
+                (frame) = CameraUtils.convert(frame)
+                (frame) = numpy.rot90(
+                    frame,
+                    k=-1,
                 )
+
+                self.callback(frame)
 
         self.thread = Thread(target=__run)
         self.thread.start()
