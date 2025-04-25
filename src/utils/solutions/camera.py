@@ -190,10 +190,10 @@ class CliInterface(VideoCapture):
         self.capture = picamera2.Picamera()
         self.capture.start()
 
-        assert self.capture.is_running()
+        assert self.capture.is_open
 
         def __run():
-            while self.capture.is_running():
+            while self.capture.is_open:
                 if self.running is False:
                     continue
 
