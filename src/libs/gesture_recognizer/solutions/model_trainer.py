@@ -33,11 +33,6 @@ class ModelTrainer:
 
         if not Path.exists(
             Path.get_path_to(
-                "None",
-                DATASETS_PATH,
-            )
-        ) or not Path.exists(
-            Path.get_path_to(
                 "none",
                 DATASETS_PATH,
             )
