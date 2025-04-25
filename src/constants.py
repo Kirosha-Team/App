@@ -3,15 +3,15 @@ from tkinter import (
 )
 
 # Paths
-UTILS_PATH = "src/utils"
-ASSETS_PATH = "src/libs/user_interface/assets"
+UTILS_PATH = "utils"
+ASSETS_PATH = "libs/user_interface/assets"
 
-DEVICES_PATH = "src/libs/communicator/devices"
-MODEL_PATH = "src/libs/gesture_recognizer/model"
-DATASETS_PATH = "src/libs/gesture_recognizer/datasets"
+DEVICES_PATH = "libs/communicator/devices"
+MODEL_PATH = "libs/gesture_recognizer/model"
+DATASETS_PATH = "libs/gesture_recognizer/datasets"
 
-LOGS_PATH = "src/logs"
-GESTURE_RECOGNIZER_PATH = "src/libs/gesture_recognizer"
+LOGS_PATH = "logs"
+GESTURE_RECOGNIZER_PATH = "libs/gesture_recognizer"
 
 ASSET_PATH = MODEL_PATH + "/gesture_recognizer.task"
 
@@ -22,7 +22,7 @@ WEATHER_LINK = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&uni
 LOCATION_LINK = "http://ipinfo.io"
 
 # Repository parameters
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 # Recognition parameters
 MAX_HANDS = 2
@@ -43,6 +43,8 @@ MAX_ACCURACY_PERCENTAGE = 100
 CAMERA_INDEX = 0
 INIT_DELAY = 5  # Seconds
 UPDATE_DELAY = 1  # Milliseconds
+
+CAMERA_TYPE = "USB"  # USB/CLI
 
 # Image parameters
 FLIP_CODE = 1
