@@ -126,8 +126,6 @@ class App:
         self,
         gesture: str,
     ) -> None:
-        print(gesture)
-
         if gesture == DEFAULT_GESTURE or gesture == NO_GESTURE:
             return
 
@@ -152,8 +150,6 @@ class App:
                     data[0],
                     int(data[1]),
                 )
-
-                print(f"sending command {command}\naddress: {address}")
 
                 self.communicator.send(
                     address=address,
@@ -533,7 +529,7 @@ class App:
 
             self.create = Create()
             self.logger = Logger(__name__)
-            self.video_capture = UsbInterface()
+            self.video_capture = UsbInterface() if CAMERA_TYPE is "USB" else CliInterface()
 
             self.gesture_recognizer = GestureRecognizer(self.__on_gesture_received)
             self.model_trainer = ModelTrainer()
