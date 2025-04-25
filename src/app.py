@@ -525,15 +525,17 @@ class App:
     ) -> None:
         try:
             self.registry = Registry()
-            self.communicator = Communicator(self.__on_server_received)
-
-            self.create = Create()
             self.logger = Logger(__name__)
-            self.video_capture = UsbInterface() if CAMERA_TYPE is "USB" else CliInterface()
+            self.create = Create()
 
             self.gesture_recognizer = GestureRecognizer(self.__on_gesture_received)
             self.model_trainer = ModelTrainer()
             self.hand_detector = HandDetector()
+
+            self.communicator = Communicator(self.__on_server_received)
+            self.video_capture = UsbInterface() if CAMERA_TYPE is "USB" else CliInterface()
+
+            self.logger.warning(f"program is using {CAMERA_TYPE} camera")
         except (
             ImportError,
             OSError,
