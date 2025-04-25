@@ -17,9 +17,12 @@ CLASS COMMUNICATOR:
         start --> starts listening and callbacks data, address
         stop --> stops listening
         send --> sends data to address
+        destroy --> destroys socket
 """
 
-from threading import Thread
+from threading import (
+    Thread,
+)
 
 import socket, requests
 
@@ -146,7 +149,9 @@ class Communicator:
 
         self._running = False
 
-    def destroy(self):
+    def destroy(
+        self,
+    ):
         self.socket.close()
 
     def send(
