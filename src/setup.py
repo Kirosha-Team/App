@@ -13,6 +13,9 @@ from src.constants import *
 
 
 def download_model() -> None:
+    if Path.exists(MODEL_PATH):
+        return
+        
     request.urlretrieve(
         MODEL_LINK,
         ASSET_PATH,
@@ -20,6 +23,9 @@ def download_model() -> None:
 
 
 def download_samples() -> None:
+    if not Path.empty(DATASETS_PATH):
+        return
+    
     gesture_recognizer_path = GESTURE_RECOGNIZER_PATH
 
     samples = request.urlopen(SAMPLES_LINK)
