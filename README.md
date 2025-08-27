@@ -5,7 +5,7 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
-> [!STOP]
+> [!CAUTION]
 > this project is discontinued due to bugs and poor optimization
 
 ## About this project
