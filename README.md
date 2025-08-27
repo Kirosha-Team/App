@@ -5,10 +5,10 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
-## About this project
-
-> [!WARNING]
+> [!ERROR]
 > this project is discontinued due to bugs and poor optimization
+
+## About this project
 
 The [smart station from Yandex](https://alice.yandex.ru/station) became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
 
