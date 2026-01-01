@@ -1,4 +1,4 @@
-<div><img src="/docs/main_menu_interface.png" width=100% height=100%></div>
+<div><img src="/docs/main_menu_interface.png" width=50% height=50%></div>
 
 <div align="center">
 <h1>
