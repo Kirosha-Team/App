@@ -5,7 +5,7 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
-[main menu interface](https://www.figma.com/design/10qgWiVTXmLmTYLKQlWHgc/Untitled?node-id=44-29&t=zy9GljAZqTkyGw80-4)
+![Uploading изображение.png…]()
 
 > [!IMPORTANT]
 > this project is no longer being supported.
