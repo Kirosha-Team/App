@@ -12,10 +12,10 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
+## About this project
+
 > [!IMPORTANT]
 > this project is no longer being supported.
-
-## About this project
 
 The idea for this project came after we analyzed the current smart device market. It turned out that there were no suitable devices for people with disabilities (deaf and hard of hearing people) with which to control a smart home. From that moment on, we decided to create a smart station that could solve this problem.
 
