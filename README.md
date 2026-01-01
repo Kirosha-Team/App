@@ -48,9 +48,6 @@ At the moment, our smart station allows users to control their smart home using 
 > [!TIP]
 > We recommend downloading the latest release to avoid bugs.
 
-> [!WARNING]
-> There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on **Raspberry Pi OS**.
-
 1. Open the repository:
    ```commandline
    cd /path/to/repository
