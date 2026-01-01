@@ -1,8 +1,13 @@
+<div align="center">
+<h1>
+    Kirosha-Team/App
+</h1>
+</div>
+
 <div align="center"><img src="/docs/main_menu_interface.png" width=50% height=50%></div>
 
 <div align="center">
 <h1>
-    Kirosha-Team/App
 </h1>
 Python application designed for gestures' controllable smart station.
 </div>
