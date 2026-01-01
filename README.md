@@ -1,4 +1,4 @@
-[main menu interface](https://github.com/Kirosha-Team/App/blob/main/docs/main_menu_interface.png)
+<div><img src="/docs/main_menu_interface.png" width=100% height=100%></div>
 
 <div align="center">
 <h1>
