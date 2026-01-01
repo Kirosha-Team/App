@@ -5,12 +5,18 @@
 Python application designed for gestures' controllable smart station.
 </div>
 
+[main menu interface](https://www.figma.com/design/10qgWiVTXmLmTYLKQlWHgc/Untitled?node-id=44-29&t=zy9GljAZqTkyGw80-4)
+
 > [!IMPORTANT]
-> this project is discontinued due to bugs and poor optimization.
+> this project is no longer being supported.
 
 ## About this project
 
+The idea for this project came after we analyzed the current smart device market. It turned out that there were no suitable devices for people with disabilities (deaf and hard of hearing people) with which to control a smart home. From that moment on, we decided to create a smart station that could solve this problem.
+
 The [smart station from Yandex](https://alice.yandex.ru/station) became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
+
+At the moment, our smart station allows users to control their smart home using gestures and create them.
 
 ## Getting started
 
