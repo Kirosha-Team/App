@@ -1,11 +1,11 @@
+[main menu interface](https://github.com/Kirosha-Team/App/blob/main/docs/main_menu_interface.png)
+
 <div align="center">
 <h1>
     Kirosha-Team/App
 </h1>
 Python application designed for gestures' controllable smart station.
 </div>
-
-![Uploading изображение.png…]()
 
 > [!IMPORTANT]
 > this project is no longer being supported.
