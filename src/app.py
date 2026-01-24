@@ -1,5 +1,3 @@
-import time
-
 from src.libs.gesture_recognizer import *
 from src.libs.user_interface import *
 from src.utils import *
@@ -42,6 +40,7 @@ class App:
     ) -> None:
         if self.video_capture.is_running():
             self.video_capture.stop()
+            CameraUtils.destroy_all_windows()
 
     def __set_video_capture(
         self,
@@ -85,7 +84,6 @@ class App:
     ) -> None:
         if self._count == (MAX_IMAGES + 1):
             self.__reset_video_capture()
-            CameraUtils.destroy_all_windows()
 
             self._box = self.create.box(
                 category=0,
@@ -533,7 +531,7 @@ class App:
             self.hand_detector = HandDetector()
 
             self.communicator = Communicator(self.__on_server_received)
-            self.video_capture = UsbInterface() if CAMERA_TYPE is "USB" else CliInterface()
+            self.video_capture = UsbInterface() if CAMERA_TYPE == "USB" else CliInterface()
 
             self.logger.warning(f"program is using {CAMERA_TYPE} camera")
         except (
