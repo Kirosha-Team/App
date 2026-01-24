@@ -2,12 +2,26 @@
 <h1>
     Kirosha-Team/App
 </h1>
+</div>
+
+<div align="center"><img src="/docs/main_menu_interface.png" width=65% height=50%></div>
+
+<div align="center">
+<h1>
+</h1>
 Python application designed for gestures' controllable smart station.
 </div>
 
 ## About this project
 
+> [!IMPORTANT]
+> this project is no longer being supported.
+
+The idea for this project came after we analyzed the current smart device market. It turned out that there were no suitable devices for people with disabilities (deaf and hard of hearing people) with which to control a smart home. From that moment on, we decided to create a smart station that could solve this problem.
+
 The [smart station from Yandex](https://alice.yandex.ru/station) became the basis of the project. We also decided to rethink the management of the station, replacing the usual voice commands with gestures. This has allowed us to increase the range of consumers, as well as simplify the use of our station.
+
+At the moment, our smart station allows users to control their smart home using gestures and create them.
 
 ## Getting started
 
@@ -33,9 +47,6 @@ The [smart station from Yandex](https://alice.yandex.ru/station) became the basi
 
 > [!TIP]
 > We recommend downloading the latest release to avoid bugs.
-
-> [!WARNING]
-> There might be some issues with downloading **mediapipe-model-maker**. Check out the [guide]() for installing it on **Raspberry Pi OS**.
 
 1. Open the repository:
    ```commandline

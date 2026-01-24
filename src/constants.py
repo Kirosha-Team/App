@@ -41,7 +41,6 @@ MAX_ACCURACY_PERCENTAGE = 100
 
 # Camera parameters
 CAMERA_INDEX = 0
-INIT_DELAY = 5  # Seconds
 UPDATE_DELAY = 1  # Milliseconds
 
 CAMERA_TYPE = "USB"  # USB/CLI
