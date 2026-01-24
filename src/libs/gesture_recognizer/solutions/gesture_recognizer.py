@@ -74,7 +74,7 @@ class GestureRecognizer:
 
     def process(
         self,
-        image: numpy.ndarray,
+        image: ndarray,
     ) -> None:
         mp_image = mediapipe.Image(
             image_format=mediapipe.ImageFormat.SRGB,
