@@ -9,7 +9,7 @@ CLASS CAMERA UTILS:
         show --> creates window with image inside
         destroy_all_windows --> destroys all the showing windows
 
-CLASS VIDEO CAPTURE:
+CLASS CAMERA CAPTURE:
     PRIVATE METHODS:
         __init__ --> initializes solution
 
@@ -31,7 +31,16 @@ from threading import (
     Thread,
 )
 
-import cv2, numpy, picamera2
+try:
+    from numpy import ndarray, rot90
+    from cv2 import cvtColor, COLOR_BGR2RGB, imwrite, imshow, destroyAllWindows, VideoCapture, flip, waitKey
+except ImportError:
+    raise ImportError("cv2 is not installed")
+
+try:
+    from picamera2 import Picamera
+except ImportError:
+    pass
 
 from src.constants import *
 
@@ -39,24 +48,24 @@ from src.constants import *
 class CameraUtils:
     @staticmethod
     def convert(
-        image: numpy.ndarray,
-    ) -> numpy.ndarray:
+        image: ndarray,
+    ) -> ndarray:
         new_image = image.__copy__()
-        new_image = cv2.cvtColor(
+        new_image = cvtColor(
             new_image,
-            cv2.COLOR_BGR2RGB,
+            COLOR_BGR2RGB,
         )
 
         return new_image
 
     @staticmethod
     def save(
-        image: numpy.ndarray,
+        image: ndarray,
         name: str,
         index: int,
     ) -> None:
         try:
-            cv2.imwrite(
+            imwrite(
                 filename=DATASETS_PATH + f"/{name}/{str(index)}.jpg",
                 img=image,
             )
@@ -65,19 +74,19 @@ class CameraUtils:
 
     @staticmethod
     def show(
-        image: numpy.ndarray,
+        image: ndarray,
     ) -> None:
-        cv2.imshow(
+        imshow(
             DEFAULT_WIN_NAME,
             image,
         )
 
     @staticmethod
     def destroy_all_windows() -> None:
-        cv2.destroyAllWindows()
+        destroyAllWindows()
 
 
-class VideoCapture:
+class CameraCapture:
     def __init__(
         self,
     ):
@@ -114,13 +123,13 @@ class VideoCapture:
         raise NotImplementedError("destroy method must be called in sub-classes")
 
 
-class UsbInterface(VideoCapture):
+class UsbInterface(CameraCapture):
     def __init__(
         self,
     ):
         super().__init__()
 
-        self.capture = cv2.VideoCapture(CAMERA_INDEX)
+        self.capture = VideoCapture(CAMERA_INDEX)
 
         assert self.capture.isOpened()
 
@@ -141,13 +150,13 @@ class UsbInterface(VideoCapture):
                     continue
 
                 self.callback(
-                    cv2.flip(
+                    flip(
                         frame,
                         FLIP_CODE,
                     )
                 )
 
-                cv2.waitKey(delay=UPDATE_DELAY)
+                waitKey(delay=UPDATE_DELAY)
 
         self.thread = Thread(target=__run)
         self.thread.start()
@@ -181,13 +190,13 @@ class UsbInterface(VideoCapture):
         self.capture.release()
 
 
-class CliInterface(VideoCapture):
+class CliInterface(CameraCapture):
     def __init__(
         self,
     ):
         super().__init__()
 
-        self.capture = picamera2.Picamera()
+        self.capture = Picamera()
         self.capture.start()
 
         assert self.capture.is_open
@@ -202,7 +211,7 @@ class CliInterface(VideoCapture):
 
                 (frame) = self.capture.capture_array()
                 (frame) = CameraUtils.convert(frame)
-                (frame) = numpy.rot90(
+                (frame) = rot90(
                     frame,
                     k=-1,
                 )
